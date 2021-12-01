@@ -5,7 +5,11 @@ module.exports = {
   },
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'nav-bottom': '#E9EBED',
+      }
+    },
   },
   variants: {},
   plugins: [],

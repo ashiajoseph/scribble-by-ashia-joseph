@@ -5,6 +5,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { setAuthHeaders } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
+import Settings from "components/Settings";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={Dashboard} />
+        <Route exact path="/settings" component={Settings} />
       </Switch>
     </Router>
   );

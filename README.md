@@ -1,1 +1,1 @@
-# -scribble-by-ashia-joseph
+# scribble-by-ashia-joseph

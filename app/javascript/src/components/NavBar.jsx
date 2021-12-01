@@ -1,12 +1,13 @@
 import React from "react";
 
-import { Typography } from "@bigbinary/neetoui/v2";
+import { ExternalLink } from "@bigbinary/neeto-icons";
+import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <div>
-      <div>
+      <div className="flex ">
         <Typography style="h4">Scribble</Typography>
         <Link to="" className="">
           Articles
@@ -15,7 +16,15 @@ const NavBar = () => {
           Settings
         </Link>
       </div>
-      <div></div>
+      <div>
+        <Button
+          onClick={() => {}}
+          size="large"
+          label="Preview"
+          style="secondary"
+          icon={ExternalLink}
+        />
+      </div>
     </div>
   );
 };

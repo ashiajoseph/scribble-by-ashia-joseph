@@ -6,8 +6,7 @@ import MenuBar from "./MenuBar/index.jsx";
 import Container from "../Common/Container";
 
 const Settings = () => {
-  const [selectedSettingOption, setSelectedSettingOption] =
-    useState("Manage categories");
+  const [selectedSettingOption, setSelectedSettingOption] = useState("");
 
   return (
     <Container overflow="overflow-hidden">

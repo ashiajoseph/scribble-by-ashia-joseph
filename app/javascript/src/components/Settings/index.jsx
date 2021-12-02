@@ -1,6 +1,6 @@
 import React from "react";
 
-import MenuBar from "./MenuBar";
+import MenuBar from "./MenuBar/index.jsx";
 
 import Container from "../Common/Container";
 

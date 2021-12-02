@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         'nav-menubar': '#E9EBED',
-        'indigo-50': "#F5F3FF"
+        'indigo-50': "#EEF2FF"
       }
     },
   },

@@ -6,12 +6,14 @@ import { Typography } from "@bigbinary/neetoui/v2";
 const MenuBar = ({
   title,
   description,
+  selectedSettingOption,
   setSelectedSettingOption,
   children,
 }) => {
+  const selected = selectedSettingOption === title ? "bg-indigo-50" : null;
   return (
     <div
-      className="flex items-center p-2 mb-2 rounded-sm hover:bg-gray-200"
+      className={`flex items-center p-2 mb-2 rounded-sm hover:bg-gray-200 ${selected}`}
       onClick={() => setSelectedSettingOption(title)}
     >
       {children}

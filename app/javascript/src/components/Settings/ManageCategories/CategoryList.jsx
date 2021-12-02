@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
 import { PageLoader } from "@bigbinary/neetoui/v2";
-import Logger from "js-logger";
 import Sortable from "sortablejs";
 
 import categoriesApi from "apis/categories";
@@ -14,16 +13,17 @@ const CategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
   const [showCategoryInput, setShowCategoryInput] = useState(false);
-  //const [categoryList, setCategoryList] = useState([])
-  const list = ["General", "Redirections", "Manage categories"];
+  const [categoryList, setCategoryList] = useState([]);
 
   const handleClick = async () => {
+    setLoading(true);
     try {
       await categoriesApi.create({ category: { name: category } });
     } catch (error) {
       logger.error(error);
     } finally {
       setShowCategoryInput(false);
+      fetchCategoryList();
     }
   };
 
@@ -31,8 +31,9 @@ const CategoryList = () => {
 
   const fetchCategoryList = async () => {
     try {
-      await categoriesApi.list();
-      //logger.info(response.data)
+      const response = await categoriesApi.list();
+      const { category_list } = response.data;
+      setCategoryList(category_list);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -42,7 +43,6 @@ const CategoryList = () => {
 
   useEffect(() => {
     const element = document.getElementById("category-list");
-    Logger.info("--", element);
     Sortable.create(element, {
       animation: 300,
       handle: ".ri-drag-move-2-line",
@@ -77,8 +77,8 @@ const CategoryList = () => {
         )}
       </div>
       <div id="category-list">
-        {list.map((category, index) => (
-          <Category key={index} category={category} />
+        {categoryList.map(({ name }, index) => (
+          <Category key={index} category={name} />
         ))}
       </div>
     </div>

@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  def index
+    @category_list = Category.all.order("position ASC")
+    puts @category_list
+  end
+
   def create
     category = Category.new(category_params)
     if category.save

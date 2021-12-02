@@ -10,10 +10,10 @@ const MenuBar = ({
   setSelectedSettingOption,
   children,
 }) => {
-  const selected = selectedSettingOption === title ? "bg-indigo-50" : null;
+  const selectedStyle = selectedSettingOption === title ? "bg-indigo-50" : null;
   return (
     <div
-      className={`flex items-center p-2 mb-2 rounded-sm hover:bg-gray-200 ${selected}`}
+      className={`flex items-center p-2 mb-2 rounded-sm hover:bg-gray-200 ${selectedStyle}`}
       onClick={() => setSelectedSettingOption(title)}
     >
       {children}

@@ -10,7 +10,7 @@ const Settings = () => {
     useState("Manage categories");
 
   return (
-    <Container>
+    <Container overflow="overflow-hidden">
       <div className="flex h-full">
         <MenuBar
           selectedSettingOption={selectedSettingOption}

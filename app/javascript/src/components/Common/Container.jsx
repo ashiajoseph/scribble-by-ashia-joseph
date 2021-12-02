@@ -2,9 +2,9 @@ import React from "react";
 
 import NavBar from "../NavBar";
 
-const Container = ({ children }) => {
+const Container = ({ overflow = "", children }) => {
   return (
-    <div className="h-screen">
+    <div className={`h-screen ${overflow}`}>
       <NavBar />
       {children}
     </div>

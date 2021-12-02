@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import Sortable from "sortablejs";
 
+import categoriesApi from "apis/categories";
+
 import Category from "./Category";
 import CategoryInput from "./Input";
 
@@ -11,9 +13,14 @@ const CategoryList = () => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const list = ["General", "Redirections", "Manage categories"];
 
-  const handleClick = () => {
-    category;
-    setShowCategoryInput(false);
+  const handleClick = async () => {
+    try {
+      await categoriesApi.create({ category: { name: category } });
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setShowCategoryInput(false);
+    }
   };
 
   const drop = () => {};

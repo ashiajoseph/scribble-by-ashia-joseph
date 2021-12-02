@@ -5,7 +5,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { setAuthHeaders } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
-import Settings from "components/Settings";
+import Settings from "components/Settings/index";
 
 const App = () => {
   const [loading, setLoading] = useState(true);

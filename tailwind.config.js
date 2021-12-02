@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'nav-bottom': '#E9EBED',
+        'nav-menubar': '#E9EBED',
       }
     },
   },

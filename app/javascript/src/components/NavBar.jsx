@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between items-center px-6 py-4 border-b-2 border-nav-bottom">
+    <div className="flex justify-between items-center px-6 py-4 border-b-2 border-nav-menubar">
       <div className="flex items-center font-semibold	">
         <Typography style="h4">Scribble</Typography>
         <NavLink

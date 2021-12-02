@@ -2,7 +2,7 @@ import React from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
 
-import Categories from "./Categories";
+import CategoryList from "./CategoryList";
 
 const ManageCategories = () => {
   return (
@@ -19,7 +19,7 @@ const ManageCategories = () => {
       >
         Create and configure the categories inside your scribble.
       </Typography>
-      <Categories />
+      <CategoryList />
     </div>
   );
 };

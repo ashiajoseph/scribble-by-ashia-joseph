@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ManageCategories from "./ManageCategories.jsx";
+import ManageCategories from "./ManageCategories/index.jsx";
 import MenuBar from "./MenuBar/index.jsx";
 
 import Container from "../Common/Container";

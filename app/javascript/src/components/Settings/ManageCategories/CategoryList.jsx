@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
+import Sortable from "sortablejs";
 
 import Category from "./Category";
 import CategoryInput from "./Input";
@@ -11,9 +12,21 @@ const CategoryList = () => {
   const list = ["General", "Redirections", "Manage categories"];
 
   const handleClick = () => {
-    logger.info(category);
+    category;
     setShowCategoryInput(false);
   };
+
+  const drop = () => {};
+
+  useEffect(() => {
+    const element = document.getElementById("category-list");
+    Sortable.create(element, {
+      animation: 300,
+      handle: ".ri-drag-move-2-line",
+      ghostClass: "bg-gray-100",
+      onEnd: drop,
+    });
+  }, []);
 
   return (
     <div>
@@ -30,7 +43,7 @@ const CategoryList = () => {
           <CategoryInput setCategory={setCategory} handleClick={handleClick} />
         )}
       </div>
-      <div>
+      <div id="category-list">
         {list.map((category, index) => (
           <Category key={index} category={category} />
         ))}

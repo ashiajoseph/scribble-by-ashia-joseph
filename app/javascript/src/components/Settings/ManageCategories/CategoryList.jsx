@@ -29,6 +29,17 @@ const CategoryList = () => {
 
   const drop = () => {};
 
+  const fetchCategoryList = async () => {
+    try {
+      await categoriesApi.list();
+      //logger.info(response.data)
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const element = document.getElementById("category-list");
     Logger.info("--", element);
@@ -39,7 +50,7 @@ const CategoryList = () => {
       onEnd: drop,
     });
     setLoading(true);
-    //fetchCategoryList()
+    fetchCategoryList();
   }, []);
 
   if (loading) {

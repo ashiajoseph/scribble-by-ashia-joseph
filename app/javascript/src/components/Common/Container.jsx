@@ -4,7 +4,7 @@ import NavBar from "../NavBar";
 
 const Container = ({ children }) => {
   return (
-    <div>
+    <div className="h-screen">
       <NavBar />
       {children}
     </div>

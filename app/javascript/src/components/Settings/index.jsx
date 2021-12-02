@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import ManageCategories from "./ManageCategories.jsx";
 import MenuBar from "./MenuBar/index.jsx";
 
 import Container from "../Common/Container";
@@ -10,11 +11,16 @@ const Settings = () => {
 
   return (
     <Container>
-      <div className="flex">
+      <div className="flex h-full">
         <MenuBar
           selectedSettingOption={selectedSettingOption}
           setSelectedSettingOption={setSelectedSettingOption}
         />
+        <div className="w-2/5 mx-auto">
+          {selectedSettingOption === "Manage categories" && (
+            <ManageCategories />
+          )}
+        </div>
       </div>
     </Container>
   );

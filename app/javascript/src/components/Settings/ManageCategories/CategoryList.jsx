@@ -17,7 +17,7 @@ const CategoryList = () => {
 
   return (
     <div>
-      <div className="mb-3">
+      <div className="mb-5">
         {!showCategoryInput && (
           <button
             className="flex items-center text-indigo-500 font-medium text-base focus:outline-none"

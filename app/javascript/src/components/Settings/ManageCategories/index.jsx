@@ -15,7 +15,7 @@ const ManageCategories = () => {
       </Typography>
       <Typography
         style="h4"
-        className="neeto-ui-text-gray-600 font-normal mb-8"
+        className="neeto-ui-text-gray-600 font-normal mb-10"
       >
         Create and configure the categories inside your scribble.
       </Typography>

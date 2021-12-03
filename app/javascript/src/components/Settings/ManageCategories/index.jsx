@@ -13,7 +13,7 @@ const ManageCategories = () => {
   const [category, setCategory] = useState("");
   const [showCategoryInput, setShowCategoryInput] = useState(false);
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     setLoading(true);
     try {
       await categoriesApi.create({ category: { name: category } });
@@ -85,7 +85,7 @@ const ManageCategories = () => {
         setCategory={setCategory}
         showCategoryInput={showCategoryInput}
         setShowCategoryInput={setShowCategoryInput}
-        handleClick={handleClick}
+        handleSubmit={handleSubmit}
         handleDrop={handleDrop}
       />
     </div>

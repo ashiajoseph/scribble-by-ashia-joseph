@@ -12,7 +12,7 @@ const CategoryList = ({
   setCategory,
   showCategoryInput,
   setShowCategoryInput,
-  handleClick,
+  handleSubmit,
   handleDrop,
 }) => {
   useEffect(() => {
@@ -40,7 +40,7 @@ const CategoryList = ({
           <CategoryInput
             category={category}
             setCategory={setCategory}
-            handleClick={handleClick}
+            handleSubmit={handleSubmit}
           />
         )}
       </div>

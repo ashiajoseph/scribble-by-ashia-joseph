@@ -10,7 +10,7 @@ const Category = ({ id, name }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
-  const handleClick = async () => {
+  const handleEdit = async () => {
     setLoading(true);
     try {
       await categoriesApi.update({
@@ -68,7 +68,7 @@ const Category = ({ id, name }) => {
         <CategoryInput
           category={category}
           setCategory={setCategory}
-          handleClick={handleClick}
+          handleSubmit={handleEdit}
         />
       )}
     </div>

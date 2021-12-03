@@ -9,8 +9,9 @@ import CategoryInput from "./Input";
 const Category = ({ id, name }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
-
+  const [loading, setLoading] = useState(false);
   const handleClick = async () => {
+    setLoading(true);
     try {
       await categoriesApi.update({
         id: id,
@@ -20,8 +21,21 @@ const Category = ({ id, name }) => {
       logger.error(error);
     } finally {
       setShowCategoryInput(false);
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div
+        id={id}
+        className="py-3 border-t-2 border-gray-100 border-solid text-gray-400"
+      >
+        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>{" "}
+        Loading ...
+      </div>
+    );
+  }
 
   return (
     <div id={id} className="flex  py-3 border-t-2 border-gray-100 border-solid	">

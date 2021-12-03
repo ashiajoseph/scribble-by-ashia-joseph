@@ -9,7 +9,7 @@ const Settings = () => {
   const [selectedSettingOption, setSelectedSettingOption] = useState("");
 
   return (
-    <Container overflow="">
+    <Container>
       <div className="flex h-full">
         <MenuBar
           selectedSettingOption={selectedSettingOption}

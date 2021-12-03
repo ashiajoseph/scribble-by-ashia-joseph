@@ -63,8 +63,11 @@ const Category = ({ id, name, deleteCategory }) => {
       </div>
       {!showCategoryInput && (
         <div className="flex justify-between w-full">
-          <div>
-            <Typography style="h4" className="text-gray-800 font-medium">
+          <div className="w-85">
+            <Typography
+              style="h4"
+              className="text-gray-800 font-medium pr-2 break-all"
+            >
               {category}
             </Typography>
           </div>
@@ -73,7 +76,7 @@ const Category = ({ id, name, deleteCategory }) => {
               className="focus:outline-none"
               onClick={() => handleDelete(id, category)}
             >
-              <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600"></i>
+              <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
             </button>
             <button
               className="focus:outline-none"
@@ -81,7 +84,7 @@ const Category = ({ id, name, deleteCategory }) => {
                 setShowCategoryInput(true);
               }}
             >
-              <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black"></i>
+              <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
             </button>
           </div>
         </div>

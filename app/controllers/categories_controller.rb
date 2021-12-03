@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category, only: %i[reorder_position]
+  before_action :load_category, only: %i[reorder_position update]
 
   def index
     @category_list = Category.all.order("position ASC")
@@ -19,6 +19,15 @@ class CategoriesController < ApplicationController
 
   def reorder_position
     if @category.update(position: category_params[:position])
+      render status: :ok, json: {}
+    else
+      render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
+    end
+  end
+
+  def update
+    puts params
+    if @category.update(name: category_params[:name])
       render status: :ok, json: {}
     else
       render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }

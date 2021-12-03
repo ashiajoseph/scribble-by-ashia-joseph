@@ -2,13 +2,26 @@ import React, { useState } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
 
+import categoriesApi from "apis/categories";
+
 import CategoryInput from "./Input";
 
 const Category = ({ id, name }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
 
-  const handleClick = async () => {};
+  const handleClick = async () => {
+    try {
+      await categoriesApi.update({
+        id: id,
+        payload: { name: category },
+      });
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setShowCategoryInput(false);
+    }
+  };
 
   return (
     <div id={id} className="flex  py-3 border-t-2 border-gray-100 border-solid	">
@@ -19,7 +32,7 @@ const Category = ({ id, name }) => {
         <div className="flex justify-between w-full">
           <div>
             <Typography style="h4" className="text-gray-800 font-medium">
-              {name}
+              {category}
             </Typography>
           </div>
           <div className="mr-5">

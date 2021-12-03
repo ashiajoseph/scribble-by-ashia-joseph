@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
+import { PageLoader } from "@bigbinary/neetoui/v2";
+
+import categoriesApi from "apis/categories";
 
 import CategoryList from "./CategoryList";
 
 const ManageCategories = () => {
+  const [loading, setLoading] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+
+  const fetchCategoryList = async () => {
+    try {
+      const response = await categoriesApi.list();
+      const { category_list } = response.data;
+      setCategoryList(category_list);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchCategoryList();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-10 mt-4" id="category-list">
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
     <div className="mt-12">
       <Typography
@@ -19,7 +50,10 @@ const ManageCategories = () => {
       >
         Create and configure the categories inside your scribble.
       </Typography>
-      <CategoryList />
+      <CategoryList
+        categoryList={categoryList}
+        fetchCategoryList={fetchCategoryList}
+      />
     </div>
   );
 };

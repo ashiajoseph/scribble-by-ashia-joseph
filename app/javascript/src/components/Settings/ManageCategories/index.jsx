@@ -10,6 +10,36 @@ import CategoryList from "./CategoryList";
 const ManageCategories = () => {
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const [category, setCategory] = useState("");
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      await categoriesApi.create({ category: { name: category } });
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setShowCategoryInput(false);
+      fetchCategoryList();
+    }
+  };
+
+  const handleDrop = async e => {
+    setLoading(true);
+    const droppedElementId = parseInt(e.item.id);
+    const newPosition = e.newIndex;
+    try {
+      await categoriesApi.reorder_position({
+        id: droppedElementId,
+        payload: { position: newPosition },
+      });
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchCategoryList = async () => {
     try {
@@ -53,6 +83,11 @@ const ManageCategories = () => {
       <CategoryList
         categoryList={categoryList}
         fetchCategoryList={fetchCategoryList}
+        setCategory={setCategory}
+        showCategoryInput={showCategoryInput}
+        setShowCategoryInput={setShowCategoryInput}
+        handleClick={handleClick}
+        handleDrop={handleDrop}
       />
     </div>
   );

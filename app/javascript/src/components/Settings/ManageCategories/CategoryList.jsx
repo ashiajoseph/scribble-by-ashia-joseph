@@ -1,39 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
 import Sortable from "sortablejs";
 
-import categoriesApi from "apis/categories";
-
 import Category from "./Category";
 import CategoryInput from "./Input";
 
-const CategoryList = ({ categoryList, fetchCategoryList }) => {
-  const [category, setCategory] = useState("");
-  const [showCategoryInput, setShowCategoryInput] = useState(false);
-
-  const handleClick = async () => {
-    try {
-      await categoriesApi.create({ category: { name: category } });
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setShowCategoryInput(false);
-      fetchCategoryList();
-    }
-  };
-
-  const drop = e => {
-    e;
-  };
-
+const CategoryList = ({
+  categoryList,
+  setCategory,
+  showCategoryInput,
+  setShowCategoryInput,
+  handleClick,
+  handleDrop,
+}) => {
   useEffect(() => {
     const element = document.getElementById("category-list");
     Sortable.create(element, {
       animation: 350,
       handle: ".ri-drag-move-2-line",
       ghostClass: "bg-gray-100",
-      onEnd: drop,
+      onEnd: handleDrop,
     });
   }, []);
 

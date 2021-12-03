@@ -25,6 +25,8 @@ const Category = ({ id, name }) => {
     }
   };
 
+  const handleDelete = () => {};
+
   if (loading) {
     return (
       <div
@@ -50,7 +52,10 @@ const Category = ({ id, name }) => {
             </Typography>
           </div>
           <div className="mr-5">
-            <button className="focus:outline-none">
+            <button
+              className="focus:outline-none"
+              onClick={() => handleDelete(id, category)}
+            >
               <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600"></i>
             </button>
             <button

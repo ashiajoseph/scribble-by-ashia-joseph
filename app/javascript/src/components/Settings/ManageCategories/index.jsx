@@ -17,18 +17,18 @@ const ManageCategories = () => {
     setLoading(true);
     try {
       await categoriesApi.create({ category: { name: category } });
+      fetchCategoryList();
     } catch (error) {
       logger.error(error);
+      setLoading(false);
     } finally {
       setShowCategoryInput(false);
-      fetchCategoryList();
     }
   };
 
   const handleDrop = async e => {
-    setLoading(true);
     const droppedElementId = parseInt(e.item.id);
-    const newPosition = e.newIndex;
+    const newPosition = e.newIndex + 1;
     try {
       await categoriesApi.reorder_position({
         id: droppedElementId,
@@ -36,8 +36,6 @@ const ManageCategories = () => {
       });
     } catch (error) {
       logger.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 

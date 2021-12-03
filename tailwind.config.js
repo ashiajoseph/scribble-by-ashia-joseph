@@ -7,7 +7,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'nav-bottom': '#E9EBED',
+        'nav-menubar': '#E9EBED',
+        'indigo-50': "#EEF2FF",
+      },
+      width: {
+        '45': '45%',
+        '85' : '85%'
       }
     },
   },

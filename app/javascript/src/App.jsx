@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-import { setAuthHeaders } from "apis/axios";
+import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
+import Settings from "components/Settings/index";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -12,6 +14,7 @@ const App = () => {
   useEffect(() => {
     /*eslint no-undef: "off"*/
     initializeLogger();
+    registerIntercepts();
     setAuthHeaders(setLoading);
   }, []);
 
@@ -21,8 +24,10 @@ const App = () => {
 
   return (
     <Router>
+      <ToastContainer />
       <Switch>
         <Route exact path="/" component={Dashboard} />
+        <Route exact path="/settings" component={Settings} />
       </Switch>
     </Router>
   );

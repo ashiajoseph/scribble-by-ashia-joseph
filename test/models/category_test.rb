@@ -24,7 +24,7 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_category_obtains_position_on_save
-    assert_equal @category.position, nil
+    assert_nil @category.position, nil
     @category.save!
     assert_not_equal @category.position, nil
   end

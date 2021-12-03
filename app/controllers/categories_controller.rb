@@ -35,7 +35,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update(name: category_params[:name])
-      render status: :ok, json: {}
+      render status: :ok, json: { notice: t("successfully_updated", entity: "Category") }
     else
       render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
     end

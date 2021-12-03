@@ -32,4 +32,5 @@
 en:
   not_found: "%{entity} Not Found"
   successfully_created: "Successfully created %{entity}"
+  successfully_updated: "Successfully updated %{entity}"
   deleted_successfully: "Deleted Successfully"

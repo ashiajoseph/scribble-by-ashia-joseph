@@ -6,7 +6,7 @@ import categoriesApi from "apis/categories";
 
 import CategoryInput from "./Input";
 
-const Category = ({ id, name }) => {
+const Category = ({ id, name, deleteCategory }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,12 @@ const Category = ({ id, name }) => {
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = (id, category) => {
+    const toBeDeleted = window.confirm(
+      `Are you sure you want to delete ${category} ?`
+    );
+    if (toBeDeleted) deleteCategory(id);
+  };
 
   if (loading) {
     return (

@@ -80,6 +80,7 @@ const ManageCategories = () => {
       </Typography>
       <CategoryList
         categoryList={categoryList}
+        setCategoryList={setCategoryList}
         fetchCategoryList={fetchCategoryList}
         category={category}
         setCategory={setCategory}

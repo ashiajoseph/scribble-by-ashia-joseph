@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category, only: %i[reorder_position update]
+  before_action :load_category, except: %i[index create]
 
   def index
     @category_list = Category.all.order("position ASC")
@@ -14,6 +14,14 @@ class CategoriesController < ApplicationController
     else
       error = category.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { error: error }
+    end
+  end
+
+  def destroy
+    if @category.destroy
+      render status: :ok, json: { notice: t("deleted_successfully") }
+    else
+      render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
     end
   end
 

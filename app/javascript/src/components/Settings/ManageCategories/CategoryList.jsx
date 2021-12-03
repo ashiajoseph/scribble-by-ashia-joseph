@@ -3,11 +3,14 @@ import React, { useEffect } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import Sortable from "sortablejs";
 
+import categoriesApi from "apis/categories";
+
 import Category from "./Category";
 import CategoryInput from "./Input";
 
 const CategoryList = ({
   categoryList,
+  setCategoryList,
   category,
   setCategory,
   showCategoryInput,
@@ -15,6 +18,18 @@ const CategoryList = ({
   handleSubmit,
   handleDrop,
 }) => {
+  const deleteCategory = async idToBeDeleted => {
+    try {
+      await categoriesApi.destroy(idToBeDeleted);
+      const filteredCategoryList = categoryList.filter(
+        ({ id }) => id !== idToBeDeleted
+      );
+      setCategoryList(filteredCategoryList);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   useEffect(() => {
     const element = document.getElementById("category-list");
     Sortable.create(element, {
@@ -46,7 +61,12 @@ const CategoryList = ({
       </div>
       <div id="category-list">
         {categoryList.map(({ id, name }, index) => (
-          <Category key={index} id={id} name={name} />
+          <Category
+            key={index}
+            id={id}
+            name={name}
+            deleteCategory={deleteCategory}
+          />
         ))}
       </div>
     </div>

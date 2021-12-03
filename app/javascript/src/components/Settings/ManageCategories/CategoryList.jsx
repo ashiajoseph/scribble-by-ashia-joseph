@@ -18,8 +18,8 @@ const CategoryList = ({
   handleDrop,
 }) => {
   const deleteCategory = async (idToBeDeleted, categoryRef) => {
-    categoryRef.current.style.display = "none";
     try {
+      categoryRef.current.style.display = "none";
       await categoriesApi.destroy(idToBeDeleted);
     } catch (error) {
       logger.error(error);

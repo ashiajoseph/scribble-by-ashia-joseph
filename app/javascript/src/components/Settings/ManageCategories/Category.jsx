@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
+import { Toastr } from "@bigbinary/neetoui/v2";
 
 import categoriesApi from "apis/categories";
 
@@ -11,6 +12,7 @@ const Category = ({ id, name, deleteCategory }) => {
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
   const categoryRef = useRef();
+
   const handleEdit = async () => {
     setLoading(true);
     try {
@@ -24,6 +26,14 @@ const Category = ({ id, name, deleteCategory }) => {
       setShowCategoryInput(false);
       setLoading(false);
     }
+  };
+
+  const handleValidation = () => {
+    const categoryName = category.trim();
+    if (categoryName.length === 0) {
+      Toastr.error(Error("Category Name can't be blank"));
+      setCategory(name);
+    } else handleEdit();
   };
 
   const handleDelete = (id, category) => {
@@ -80,7 +90,7 @@ const Category = ({ id, name, deleteCategory }) => {
         <CategoryInput
           category={category}
           setCategory={setCategory}
-          handleSubmit={handleEdit}
+          handleSubmit={handleValidation}
         />
       )}
     </div>

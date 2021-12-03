@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
 
@@ -10,6 +10,7 @@ const Category = ({ id, name, deleteCategory }) => {
   const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
+  const categoryRef = useRef();
   const handleEdit = async () => {
     setLoading(true);
     try {
@@ -27,25 +28,26 @@ const Category = ({ id, name, deleteCategory }) => {
 
   const handleDelete = (id, category) => {
     const toBeDeleted = window.confirm(
-      `Are you sure you want to delete ${category} ?`
+      `Are you sure you want to delete '${category}' ?`
     );
-    if (toBeDeleted) deleteCategory(id);
+    if (toBeDeleted) deleteCategory(id, categoryRef);
   };
 
   if (loading) {
     return (
-      <div
-        id={id}
-        className="py-3 border-t-2 border-gray-100 border-solid text-gray-400"
-      >
-        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>{" "}
-        Loading ...
+      <div className="py-3 border-t-2 border-gray-100 border-solid text-gray-400">
+        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>
+        Editing ...
       </div>
     );
   }
 
   return (
-    <div id={id} className="flex  py-3 border-t-2 border-gray-100 border-solid	">
+    <div
+      id={id}
+      className="flex  py-3 border-t-2 border-gray-100 border-solid"
+      ref={categoryRef}
+    >
       <div className="flex flex-row items-center">
         <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>
       </div>

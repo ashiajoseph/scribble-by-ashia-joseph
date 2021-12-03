@@ -17,6 +17,7 @@ const ManageCategories = () => {
     setLoading(true);
     try {
       await categoriesApi.create({ category: { name: category } });
+      setCategory("");
       fetchCategoryList();
     } catch (error) {
       logger.error(error);
@@ -65,7 +66,7 @@ const ManageCategories = () => {
   }
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 mb-6 ">
       <Typography
         style="h3"
         className="neeto-ui-text-gray-800 font-semibold mb-1"
@@ -80,7 +81,6 @@ const ManageCategories = () => {
       </Typography>
       <CategoryList
         categoryList={categoryList}
-        setCategoryList={setCategoryList}
         fetchCategoryList={fetchCategoryList}
         category={category}
         setCategory={setCategory}

@@ -10,7 +10,6 @@ import CategoryInput from "./Input";
 
 const CategoryList = ({
   categoryList,
-  setCategoryList,
   category,
   setCategory,
   showCategoryInput,
@@ -18,13 +17,10 @@ const CategoryList = ({
   handleSubmit,
   handleDrop,
 }) => {
-  const deleteCategory = async idToBeDeleted => {
+  const deleteCategory = async (idToBeDeleted, categoryRef) => {
+    categoryRef.current.style.display = "none";
     try {
       await categoriesApi.destroy(idToBeDeleted);
-      const filteredCategoryList = categoryList.filter(
-        ({ id }) => id !== idToBeDeleted
-      );
-      setCategoryList(filteredCategoryList);
     } catch (error) {
       logger.error(error);
     }
@@ -33,7 +29,7 @@ const CategoryList = ({
   useEffect(() => {
     const element = document.getElementById("category-list");
     Sortable.create(element, {
-      animation: 350,
+      animation: 280,
       handle: ".ri-drag-move-2-line",
       ghostClass: "bg-gray-100",
       onEnd: handleDrop,
@@ -59,7 +55,7 @@ const CategoryList = ({
           />
         )}
       </div>
-      <div id="category-list">
+      <div id="category-list" className="overflow-y-scroll">
         {categoryList.map(({ id, name }, index) => (
           <Category
             key={index}

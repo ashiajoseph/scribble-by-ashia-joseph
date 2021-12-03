@@ -34,7 +34,6 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    puts params
     if @category.update(name: category_params[:name])
       render status: :ok, json: {}
     else

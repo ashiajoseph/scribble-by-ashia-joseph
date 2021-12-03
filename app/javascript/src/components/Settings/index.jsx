@@ -9,13 +9,13 @@ const Settings = () => {
   const [selectedSettingOption, setSelectedSettingOption] = useState("");
 
   return (
-    <Container overflow="overflow-hidden">
+    <Container overflow="">
       <div className="flex h-full">
         <MenuBar
           selectedSettingOption={selectedSettingOption}
           setSelectedSettingOption={setSelectedSettingOption}
         />
-        <div className="w-2/5 mx-auto">
+        <div className="w-45 mx-auto">
           {selectedSettingOption === "Manage categories" && (
             <ManageCategories />
           )}

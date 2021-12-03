@@ -8,6 +8,7 @@ import CategoryInput from "./Input";
 
 const CategoryList = ({
   categoryList,
+  category,
   setCategory,
   showCategoryInput,
   setShowCategoryInput,
@@ -36,12 +37,16 @@ const CategoryList = ({
           </button>
         )}
         {showCategoryInput && (
-          <CategoryInput setCategory={setCategory} handleClick={handleClick} />
+          <CategoryInput
+            category={category}
+            setCategory={setCategory}
+            handleClick={handleClick}
+          />
         )}
       </div>
       <div id="category-list">
         {categoryList.map(({ id, name }, index) => (
-          <Category key={index} id={id} category={name} />
+          <Category key={index} id={id} name={name} />
         ))}
       </div>
     </div>

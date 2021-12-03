@@ -81,6 +81,7 @@ const ManageCategories = () => {
       <CategoryList
         categoryList={categoryList}
         fetchCategoryList={fetchCategoryList}
+        category={category}
         setCategory={setCategory}
         showCategoryInput={showCategoryInput}
         setShowCategoryInput={setShowCategoryInput}

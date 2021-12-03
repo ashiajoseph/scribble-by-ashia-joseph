@@ -3,6 +3,11 @@
 Rails.application.routes.draw do
   defaults format: :json do
     resources :categories, only: %i[index create]
+    resources :category do
+      memeber do
+        put "reorder_position"
+      end
+    end
   end
 
   root "home#index"

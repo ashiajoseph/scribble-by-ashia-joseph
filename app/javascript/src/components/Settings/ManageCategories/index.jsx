@@ -74,7 +74,7 @@ const ManageCategories = () => {
   }
 
   return (
-    <div className="mt-12 mb-6 ">
+    <div className="mt-12 mb-6">
       <Typography
         style="h3"
         className="neeto-ui-text-gray-800 font-semibold mb-1"

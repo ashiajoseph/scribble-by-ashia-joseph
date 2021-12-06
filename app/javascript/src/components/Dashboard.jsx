@@ -40,7 +40,7 @@ const Dashboard = () => {
     <Container>
       <div className="flex flex-row">
         <Menu categoryList={categoryList} setCategoryList={setCategoryList} />
-        <ArticleList />
+        <ArticleList tableColumnHeader />
       </div>
     </Container>
   );

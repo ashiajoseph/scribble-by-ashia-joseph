@@ -88,7 +88,6 @@ const ArticleForm = ({ categoryList, formData, setFormData }) => {
             }}
             buttonStyle="primary"
             name="status"
-            trigger="click"
           >
             <li onClick={() => handleChangeStatus("published")}>Publish</li>
             <li onClick={() => handleChangeStatus("draft")}>Save Draft</li>

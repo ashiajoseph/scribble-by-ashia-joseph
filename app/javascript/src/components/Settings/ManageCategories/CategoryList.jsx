@@ -52,6 +52,7 @@ const CategoryList = ({
             category={category}
             setCategory={setCategory}
             handleSubmit={handleSubmit}
+            width="w-1/2"
           />
         )}
       </div>

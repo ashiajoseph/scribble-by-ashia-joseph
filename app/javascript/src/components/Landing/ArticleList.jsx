@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Typography } from "@bigbinary/neetoui/v2";
+
 import SubHeader from "./SubHeader";
 
 const ArticleList = () => {
@@ -17,6 +19,9 @@ const ArticleList = () => {
         tableColumnHeader={tableColumnHeader}
         setTableColumnHeader={setTableColumnHeader}
       />
+      <Typography style="h4" weight="semibold" className="pl-6">
+        Articles
+      </Typography>
     </div>
   );
 };

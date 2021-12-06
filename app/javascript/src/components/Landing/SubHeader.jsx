@@ -40,7 +40,7 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
       </div>
       <div>
         <Link
-          to={"/"}
+          to={"/articles/new"}
           className="p-2 bg-indigo-500 text-white flex flex-row font-semibold rounded	"
         >
           Add new article <Plus size={18} />

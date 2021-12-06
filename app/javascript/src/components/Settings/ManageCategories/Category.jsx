@@ -94,6 +94,7 @@ const Category = ({ id, name, deleteCategory }) => {
           category={category}
           setCategory={setCategory}
           handleSubmit={handleValidation}
+          width="w-1/2"
         />
       )}
     </div>

@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Menu categoryList={categoryList} />
+      <Menu categoryList={categoryList} setCategoryList={setCategoryList} />
     </Container>
   );
 };

@@ -14,7 +14,7 @@ const CategoryList = ({
   setCategory,
   showCategoryInput,
   setShowCategoryInput,
-  handleSubmit,
+  handleValidation,
   handleDrop,
 }) => {
   const deleteCategory = async (idToBeDeleted, categoryRef) => {
@@ -51,7 +51,7 @@ const CategoryList = ({
           <CategoryInput
             category={category}
             setCategory={setCategory}
-            handleSubmit={handleSubmit}
+            handleSubmit={handleValidation}
             width="w-1/2"
           />
         )}

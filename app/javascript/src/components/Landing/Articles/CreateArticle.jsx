@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import { PageLoader, Toastr } from "@bigbinary/neetoui/v2";
 import { isNil, isEmpty, either } from "ramda";
 
+import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 
 import ArticleForm from "./Form/ArticleForm";
 
 import Container from "../../Common/Container";
 
-const CreateArticle = () => {
+const CreateArticle = ({ history }) => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [formData, setFormData] = useState({
@@ -19,7 +20,20 @@ const CreateArticle = () => {
     status: "draft",
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await articlesApi.create({
+        article: formData,
+        category_id: formData["category_id"],
+      });
+      setLoading(false);
+      history.push("/");
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
 
   const handleValidation = e => {
     e.preventDefault();

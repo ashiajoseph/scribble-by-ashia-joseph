@@ -1,6 +1,8 @@
 import React from "react";
 
+import { Plus } from "@bigbinary/neeto-icons";
 import { Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
+import { Link } from "react-router-dom";
 
 const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
   const toggleCheckbox = e => {
@@ -11,14 +13,13 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
   };
 
   return (
-    <div className="flex flex-row justify-end px-4 py-3">
-      <div>
+    <div className="flex flex-row justify-end px-4 py-3 items-center">
+      <div className="mr-4">
         <Dropdown
           buttonStyle="secondary"
           label="Columns"
           closeOnOutsideClick={true}
           closeOnSelect={false}
-          className="block z-0"
         >
           <h5 className="font-bold py-2 px-3">Columns</h5>
           {Object.keys(tableColumnHeader).map((column, index) => (
@@ -33,6 +34,14 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
             </li>
           ))}
         </Dropdown>
+      </div>
+      <div>
+        <Link
+          to={"/"}
+          className="p-2 bg-indigo-500 text-white flex flex-row font-semibold rounded	"
+        >
+          Add new article <Plus size={18} />
+        </Link>
       </div>
     </div>
   );

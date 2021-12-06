@@ -5,6 +5,7 @@ import { PageLoader } from "@bigbinary/neetoui/v2";
 import categoriesApi from "apis/categories";
 
 import Container from "./Common/Container";
+import ArticleList from "./Landing/ArticleList";
 import Menu from "./Landing/Menu";
 
 const Dashboard = () => {
@@ -37,7 +38,10 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Menu categoryList={categoryList} setCategoryList={setCategoryList} />
+      <div className="flex flex-row">
+        <Menu categoryList={categoryList} setCategoryList={setCategoryList} />
+        <ArticleList />
+      </div>
     </Container>
   );
 };

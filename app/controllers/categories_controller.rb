@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
     if category.save
       render status: :ok, json: {
         notice: t("successfully_created", entity: "Category"),
-        new_category: { id: category.id, name: category.name }
+        new_category: { id: category.id, name: category.name, position: category.position }
       }
     else
       error = category.errors.full_messages.to_sentence

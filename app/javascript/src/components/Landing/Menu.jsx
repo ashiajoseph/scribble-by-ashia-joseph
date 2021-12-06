@@ -47,56 +47,54 @@ const Menu = ({ categoryList, setCategoryList }) => {
       };
 
   return (
-    <div>
-      <MenuBar showMenu={true} title="Articles">
-        <MenuBar.Block label="All" count={0} />
-        <MenuBar.Block label="Draft" count={0} />
-        <MenuBar.Block label="Published" count={0} />
+    <MenuBar showMenu={true} title="Articles">
+      <MenuBar.Block label="All" count={0} />
+      <MenuBar.Block label="Draft" count={0} />
+      <MenuBar.Block label="Published" count={0} />
 
-        <MenuBar.SubTitle
-          iconProps={[
-            {
-              icon: Search,
-              onClick: () => setIsSearchCollapsed(!isSearchCollapsed),
-            },
-            showCategoryInput,
-          ]}
+      <MenuBar.SubTitle
+        iconProps={[
+          {
+            icon: Search,
+            onClick: () => setIsSearchCollapsed(!isSearchCollapsed),
+          },
+          showCategoryInput,
+        ]}
+      >
+        <Typography
+          component="h4"
+          style="h5"
+          textTransform="uppercase"
+          weight="bold"
         >
-          <Typography
-            component="h4"
-            style="h5"
-            textTransform="uppercase"
-            weight="bold"
-          >
-            Categories
-          </Typography>
-        </MenuBar.SubTitle>
-        <MenuBar.Search
-          collapse={isSearchCollapsed}
-          onCollapse={() => {
-            setSearchWord("");
-            setIsSearchCollapsed(true);
-          }}
-          onChange={e => setSearchWord(e.target.value)}
+          Categories
+        </Typography>
+      </MenuBar.SubTitle>
+      <MenuBar.Search
+        collapse={isSearchCollapsed}
+        onCollapse={() => {
+          setSearchWord("");
+          setIsSearchCollapsed(true);
+        }}
+        onChange={e => setSearchWord(e.target.value)}
+      />
+      {addCategory && (
+        <CategoryInput
+          category={category}
+          setCategory={setCategory}
+          handleSubmit={handleValidation}
         />
-        {addCategory && (
-          <CategoryInput
-            category={category}
-            setCategory={setCategory}
-            handleSubmit={handleValidation}
-          />
-        )}
-        {categoryList
-          .filter(category =>
-            searchWord === ""
-              ? true
-              : category.name.toLowerCase().includes(searchWord.toLowerCase())
-          )
-          .map((category, index) => (
-            <MenuBar.Block key={index} label={category.name} count={0} />
-          ))}
-      </MenuBar>
-    </div>
+      )}
+      {categoryList
+        .filter(category =>
+          searchWord === ""
+            ? true
+            : category.name.toLowerCase().includes(searchWord.toLowerCase())
+        )
+        .map((category, index) => (
+          <MenuBar.Block key={index} label={category.name} count={0} />
+        ))}
+    </MenuBar>
   );
 };
 

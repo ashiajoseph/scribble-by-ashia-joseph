@@ -20,7 +20,7 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
           closeOnSelect={false}
           className="block z-0"
         >
-          <h5 className="font-bold py-2 px-3 ">Columns</h5>
+          <h5 className="font-bold py-2 px-3">Columns</h5>
           {Object.keys(tableColumnHeader).map((column, index) => (
             <li key={index} className="capitalize text-color-black">
               <Checkbox

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { PageLoader } from "@bigbinary/neetoui/v2";
+import { PageLoader, Toastr } from "@bigbinary/neetoui/v2";
+import { isNil, isEmpty, either } from "ramda";
 
 import categoriesApi from "apis/categories";
 
@@ -17,6 +18,18 @@ const CreateArticle = () => {
     category_id: "",
     status: "draft",
   });
+
+  const handleSubmit = () => {};
+
+  const handleValidation = e => {
+    e.preventDefault();
+    const emptyFieldPresent = Object.keys(formData).some(field =>
+      either(isEmpty, isNil)(formData[field])
+    );
+    if (emptyFieldPresent) Toastr.error(Error("Please fill all the Fields"));
+    else handleSubmit();
+  };
+
   const fetchCategoryList = async () => {
     try {
       const response = await categoriesApi.list();
@@ -48,6 +61,7 @@ const CreateArticle = () => {
           categoryList={categoryList}
           formData={formData}
           setFormData={setFormData}
+          handleValidation={handleValidation}
         />
       </div>
     </Container>

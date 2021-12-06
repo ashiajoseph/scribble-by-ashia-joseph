@@ -13,7 +13,8 @@ const ArticleForm = ({
   categoryList,
   formData,
   setFormData,
-  defaultValue = {},
+  handleValidation,
+  defaultValue = { label: "", value: "" },
 }) => {
   const articleTitleRef = useRef();
   const history = useHistory();
@@ -47,7 +48,7 @@ const ArticleForm = ({
   };
 
   return (
-    <form>
+    <form onSubmit={handleValidation}>
       <div className="flex flex-row justify-between">
         <div className="w-62 mb-5">
           <Input
@@ -89,8 +90,8 @@ const ArticleForm = ({
       <div className="flex flex-row">
         <div className="flex flex-row">
           <Button
+            type="submit"
             label={formData["status"] === "draft" ? "Save Draft" : "Publish"}
-            onClick={() => {}}
             style="primary"
             className="bg-indigo-500 rounded-tr-none rounded-br-none"
           />

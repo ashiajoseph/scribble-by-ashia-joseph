@@ -7,9 +7,16 @@ import {
   Dropdown,
   Select,
 } from "@bigbinary/neetoui/v2";
+import { useHistory } from "react-router-dom";
 
-const ArticleForm = ({ categoryList, formData, setFormData }) => {
+const ArticleForm = ({
+  categoryList,
+  formData,
+  setFormData,
+  defaultValue = {},
+}) => {
   const articleTitleRef = useRef();
+  const history = useHistory();
 
   useEffect(() => {
     articleTitleRef.current.focus();
@@ -35,6 +42,10 @@ const ArticleForm = ({ categoryList, formData, setFormData }) => {
     });
   };
 
+  const handleCancel = () => {
+    history.push("/");
+  };
+
   return (
     <form>
       <div className="flex flex-row justify-between">
@@ -49,6 +60,7 @@ const ArticleForm = ({ categoryList, formData, setFormData }) => {
         </div>
         <div className="w-35">
           <Select
+            defaultValue={defaultValue}
             size="small"
             isClearable
             isSearchable
@@ -95,7 +107,7 @@ const ArticleForm = ({ categoryList, formData, setFormData }) => {
         </div>
         <Button
           label="Cancel"
-          onClick={() => {}}
+          onClick={handleCancel}
           className="text-black ml-4"
           style="link"
         />

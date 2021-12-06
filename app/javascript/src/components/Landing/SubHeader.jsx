@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Plus } from "@bigbinary/neeto-icons";
-import { Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
+import { Plus, Search } from "@bigbinary/neeto-icons";
+import { Dropdown, Checkbox, Input } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 
 const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
@@ -14,6 +14,9 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
 
   return (
     <div className="flex flex-row justify-end px-4 py-3 items-center">
+      <div className="mr-4 w-30">
+        <Input placeholder="Search article title" prefix={<Search />} />
+      </div>
       <div className="mr-4">
         <Dropdown
           buttonStyle="secondary"

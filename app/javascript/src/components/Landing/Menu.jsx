@@ -8,13 +8,20 @@ import categoriesApi from "apis/categories";
 
 import CategoryInput from "../Settings/ManageCategories/Input";
 
-const Menu = ({ categoryList, setCategoryList, articlesCount }) => {
+const Menu = ({
+  categoryList,
+  setCategoryList,
+  totalArticlesCount,
+  displayedCount,
+  setDisplayedCount,
+  setFilteredArticlesCount,
+}) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [addCategory, setAddCategory] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [category, setCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   const handleSubmit = async () => {
     try {
@@ -38,13 +45,31 @@ const Menu = ({ categoryList, setCategoryList, articlesCount }) => {
     } else handleSubmit();
   };
 
-  const handleCategoryClick = categoryName => {
+  const handleCategoryClick = (categoryName, draftCount, publishedCount) => {
     const name = categoryName === selectedCategory ? "" : categoryName;
+    const articlesCount =
+      categoryName === selectedCategory
+        ? totalArticlesCount
+        : { draft: draftCount, published: publishedCount };
+    const currentCount =
+      selectedStatus === "All"
+        ? articlesCount.draft + articlesCount.published
+        : selectedStatus === "Draft"
+        ? articlesCount.draft
+        : articlesCount.published;
     setSelectedCategory(name);
+    setDisplayedCount(articlesCount);
+    setFilteredArticlesCount(currentCount);
   };
-  const handleStatusClick = status => {
+
+  const handleStatusClick = (status, count) => {
     const new_status = status === selectedStatus ? "All" : status;
+    const articlesCount =
+      new_status === "All"
+        ? totalArticlesCount.draft + totalArticlesCount.published
+        : count;
     setSelectedStatus(new_status);
+    setFilteredArticlesCount(articlesCount);
   };
 
   const showCategoryInput = addCategory
@@ -61,21 +86,26 @@ const Menu = ({ categoryList, setCategoryList, articlesCount }) => {
     <MenuBar showMenu={true} title="Articles">
       <MenuBar.Block
         label="All"
-        count={articlesCount.draft + articlesCount.published}
+        count={displayedCount.draft + displayedCount.published}
         active={selectedStatus === "All"}
-        onClick={() => handleStatusClick("All")}
+        onClick={() =>
+          handleStatusClick(
+            "All",
+            displayedCount.draft + displayedCount.published
+          )
+        }
       />
       <MenuBar.Block
         label="Draft"
-        count={articlesCount.draft}
+        count={displayedCount.draft}
         active={selectedStatus === "Draft"}
-        onClick={() => handleStatusClick("Draft")}
+        onClick={() => handleStatusClick("Draft", displayedCount.draft)}
       />
       <MenuBar.Block
         label="Published"
-        count={articlesCount.published}
+        count={displayedCount.published}
         active={selectedStatus === "Published"}
-        onClick={() => handleStatusClick("Published")}
+        onClick={() => handleStatusClick("Published", displayedCount.published)}
       />
 
       <MenuBar.SubTitle
@@ -121,9 +151,15 @@ const Menu = ({ categoryList, setCategoryList, articlesCount }) => {
           <MenuBar.Block
             key={index}
             label={category.name}
-            count={category.article_list.length}
+            count={category.draft + category.published}
             active={selectedCategory === category.name}
-            onClick={() => handleCategoryClick(category.name)}
+            onClick={() =>
+              handleCategoryClick(
+                category.name,
+                category.draft,
+                category.published
+              )
+            }
           />
         ))}
     </MenuBar>

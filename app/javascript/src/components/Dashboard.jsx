@@ -11,16 +11,30 @@ import Menu from "./Landing/Menu";
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
-  const [articlesCount, setArticlesCount] = useState({
+  const [totalArticlesCount, setTotalArticlesCount] = useState({
     draft: 0,
     published: 0,
   });
+  const [displayedCount, setDisplayedCount] = useState({
+    draft: 0,
+    published: 0,
+  });
+  const [filteredArticlesCount, setFilteredArticlesCount] = useState();
+
   const fetchCategoryList = async () => {
     try {
       const response = await categoriesApi.list();
-
-      const { draft_count, published_count, category_list } = response.data;
-      setArticlesCount({ draft: draft_count, published: published_count });
+      const { total_draft_count, total_published_count, category_list } =
+        response.data;
+      setFilteredArticlesCount(total_draft_count + total_published_count);
+      setTotalArticlesCount({
+        draft: total_draft_count,
+        published: total_published_count,
+      });
+      setDisplayedCount({
+        draft: total_draft_count,
+        published: total_published_count,
+      });
       setCategoryList(category_list);
     } catch (error) {
       logger.error(error);
@@ -47,9 +61,12 @@ const Dashboard = () => {
         <Menu
           categoryList={categoryList}
           setCategoryList={setCategoryList}
-          articlesCount={articlesCount}
+          totalArticlesCount={totalArticlesCount}
+          displayedCount={displayedCount}
+          setDisplayedCount={setDisplayedCount}
+          setFilteredArticlesCount={setFilteredArticlesCount}
         />
-        <ArticleList tableColumnHeader />
+        <ArticleList filteredArticlesCount={filteredArticlesCount} />
       </div>
     </Container>
   );

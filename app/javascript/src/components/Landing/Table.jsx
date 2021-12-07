@@ -1,7 +1,7 @@
 import React from "react";
 
 const Table = () => {
-  return <div>fdg</div>;
+  return <div>TABLE</div>;
 };
 
 export default Table;

@@ -11,6 +11,7 @@ import Menu from "./Landing/Menu";
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
+  const [articleList, setArticleList] = useState([]);
   const [totalArticlesCount, setTotalArticlesCount] = useState({
     draft: 0,
     published: 0,
@@ -24,9 +25,12 @@ const Dashboard = () => {
   const fetchCategoryList = async () => {
     try {
       const response = await categoriesApi.list();
-      logger.info(response.data);
-      const { total_draft_count, total_published_count, category_list } =
-        response.data;
+      const {
+        total_draft_count,
+        total_published_count,
+        category_list,
+        article_list,
+      } = response.data;
       setFilteredArticlesCount(total_draft_count + total_published_count);
       setTotalArticlesCount({
         draft: total_draft_count,
@@ -37,6 +41,7 @@ const Dashboard = () => {
         published: total_published_count,
       });
       setCategoryList(category_list);
+      setArticleList(article_list.flat());
     } catch (error) {
       logger.error(error);
     } finally {
@@ -67,7 +72,10 @@ const Dashboard = () => {
           setDisplayedCount={setDisplayedCount}
           setFilteredArticlesCount={setFilteredArticlesCount}
         />
-        <ArticleList filteredArticlesCount={filteredArticlesCount} />
+        <ArticleList
+          filteredArticlesCount={filteredArticlesCount}
+          articleList={articleList}
+        />
       </div>
     </Container>
   );

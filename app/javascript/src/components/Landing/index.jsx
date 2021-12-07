@@ -5,7 +5,7 @@ import { Typography } from "@bigbinary/neetoui/v2";
 import SubHeader from "./SubHeader";
 import Table from "./Table";
 
-const ArticleList = ({ filteredArticlesCount }) => {
+const ArticleList = ({ filteredArticlesCount, articleList }) => {
   const [tableColumnHeader, setTableColumnHeader] = useState({
     title: true,
     categories: true,
@@ -23,7 +23,7 @@ const ArticleList = ({ filteredArticlesCount }) => {
       <Typography style="h4" weight="semibold" className="pl-6 mb-10">
         {filteredArticlesCount} Articles
       </Typography>
-      <Table />
+      <Table articleList={articleList} />
     </div>
   );
 };

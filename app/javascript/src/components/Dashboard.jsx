@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
+import { Typography } from "@bigbinary/neetoui/v2";
+import { useTable, useFilters } from "react-table";
 
 import categoriesApi from "apis/categories";
 
 import Container from "./Common/Container";
-import ArticleList from "./Landing";
 import Menu from "./Landing/Menu";
+import SubHeader from "./Landing/SubHeader";
+import Table from "./Landing/Table";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -21,6 +24,13 @@ const Dashboard = () => {
     published: 0,
   });
   const [filteredArticlesCount, setFilteredArticlesCount] = useState();
+  const [tableColumnHeader, setTableColumnHeader] = useState({
+    title: true,
+    date: true,
+    author: true,
+    category: true,
+    status: true,
+  });
 
   const fetchCategoryList = async () => {
     try {
@@ -55,6 +65,55 @@ const Dashboard = () => {
     }
   };
 
+  const applyStyle = column => {
+    let style = "";
+    const cols = ["author", "category", "status"];
+    if (column === "title") style = "text-indigo-500 font-medium";
+    else if (cols.includes(column)) style = "neeto-ui-text-gray-600";
+
+    return style;
+  };
+
+  const filteredColumns = Object.keys(tableColumnHeader).filter(
+    column => tableColumnHeader[column]
+  );
+  const columnHeader = filteredColumns.map(column => {
+    return {
+      id: column,
+      Header: column.toUpperCase(),
+      accessor: column,
+      Cell: ({ row }) => (
+        <span className={applyStyle(column)}>{row.values[column]}</span>
+      ),
+    };
+  });
+
+  if (filteredColumns.length !== 0) {
+    columnHeader.push(
+      {
+        id: "delete",
+        width: 35,
+        Cell: () => (
+          <button className="focus:outline-none" onClick={() => {}}>
+            <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
+          </button>
+        ),
+      },
+      {
+        id: "edit",
+        width: 40,
+        Cell: () => (
+          <button className="focus:outline-none" onClick={() => {}}>
+            <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
+          </button>
+        ),
+      }
+    );
+  }
+  const data = useMemo(() => articleList, [articleList]);
+  const columns = useMemo(() => columnHeader, [tableColumnHeader]);
+  const tableInstance = useTable({ columns: columns, data: data }, useFilters);
+
   useEffect(() => {
     fetchCategoryList();
   }, []);
@@ -77,11 +136,19 @@ const Dashboard = () => {
           displayedCount={displayedCount}
           setDisplayedCount={setDisplayedCount}
           setFilteredArticlesCount={setFilteredArticlesCount}
+          tableInstance={tableInstance}
         />
-        <ArticleList
-          filteredArticlesCount={filteredArticlesCount}
-          articleList={articleList}
-        />
+        <div className="w-full my-3">
+          <SubHeader
+            tableColumnHeader={tableColumnHeader}
+            setTableColumnHeader={setTableColumnHeader}
+            tableInstance={tableInstance}
+          />
+          <Typography style="h4" weight="semibold" className="pl-6 mb-10">
+            {filteredArticlesCount} Articles
+          </Typography>
+          <Table tableInstance={tableInstance} />
+        </div>
       </div>
     </Container>
   );

@@ -4,7 +4,12 @@ import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Dropdown, Checkbox, Input } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 
-const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
+const SubHeader = ({
+  tableColumnHeader,
+  setTableColumnHeader,
+  tableInstance,
+}) => {
+  const { setFilter } = tableInstance;
   const toggleCheckbox = e => {
     const { id, checked } = e.target;
     setTableColumnHeader(prev => {
@@ -12,10 +17,18 @@ const SubHeader = ({ tableColumnHeader, setTableColumnHeader }) => {
     });
   };
 
+  const handleChange = e => {
+    setFilter("title", e.target.value);
+  };
+
   return (
     <div className="flex flex-row justify-end px-4 py-3 items-center">
       <div className="mr-4 w-30">
-        <Input placeholder="Search article title" prefix={<Search />} />
+        <Input
+          placeholder="Search article title"
+          prefix={<Search />}
+          onChange={handleChange}
+        />
       </div>
       <div className="mr-4">
         <Dropdown

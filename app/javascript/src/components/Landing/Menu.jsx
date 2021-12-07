@@ -15,6 +15,7 @@ const Menu = ({
   displayedCount,
   setDisplayedCount,
   setFilteredArticlesCount,
+  tableInstance,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [addCategory, setAddCategory] = useState(false);
@@ -22,6 +23,7 @@ const Menu = ({
   const [category, setCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
+  const { setFilter } = tableInstance;
 
   const handleSubmit = async () => {
     try {
@@ -57,6 +59,7 @@ const Menu = ({
         : selectedStatus === "Draft"
         ? articlesCount.draft
         : articlesCount.published;
+    setFilter("category", name);
     setSelectedCategory(name);
     setDisplayedCount(articlesCount);
     setFilteredArticlesCount(currentCount);
@@ -68,6 +71,8 @@ const Menu = ({
       new_status === "All"
         ? totalArticlesCount.draft + totalArticlesCount.published
         : count;
+    const filterStatus = new_status === "All" ? "" : new_status;
+    setFilter("status", filterStatus);
     setSelectedStatus(new_status);
     setFilteredArticlesCount(articlesCount);
   };

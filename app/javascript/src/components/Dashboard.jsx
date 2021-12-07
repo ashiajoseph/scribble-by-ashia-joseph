@@ -5,7 +5,7 @@ import { PageLoader } from "@bigbinary/neetoui/v2";
 import categoriesApi from "apis/categories";
 
 import Container from "./Common/Container";
-import ArticleList from "./Landing/ArticleList";
+import ArticleList from "./Landing";
 import Menu from "./Landing/Menu";
 
 const Dashboard = () => {
@@ -24,6 +24,7 @@ const Dashboard = () => {
   const fetchCategoryList = async () => {
     try {
       const response = await categoriesApi.list();
+      logger.info(response.data);
       const { total_draft_count, total_published_count, category_list } =
         response.data;
       setFilteredArticlesCount(total_draft_count + total_published_count);

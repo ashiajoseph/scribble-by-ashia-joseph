@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Typography } from "@bigbinary/neetoui/v2";
 
 import SubHeader from "./SubHeader";
+import Table from "./Table";
 
 const ArticleList = ({ filteredArticlesCount }) => {
   const [tableColumnHeader, setTableColumnHeader] = useState({
@@ -19,9 +20,10 @@ const ArticleList = ({ filteredArticlesCount }) => {
         tableColumnHeader={tableColumnHeader}
         setTableColumnHeader={setTableColumnHeader}
       />
-      <Typography style="h4" weight="semibold" className="pl-6">
+      <Typography style="h4" weight="semibold" className="pl-6 mb-10">
         {filteredArticlesCount} Articles
       </Typography>
+      <Table />
     </div>
   );
 };

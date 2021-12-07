@@ -11,11 +11,16 @@ import Menu from "./Landing/Menu";
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
-
+  const [articlesCount, setArticlesCount] = useState({
+    draft: 0,
+    published: 0,
+  });
   const fetchCategoryList = async () => {
     try {
       const response = await categoriesApi.list();
-      const { category_list } = response.data;
+
+      const { draft_count, published_count, category_list } = response.data;
+      setArticlesCount({ draft: draft_count, published: published_count });
       setCategoryList(category_list);
     } catch (error) {
       logger.error(error);
@@ -39,7 +44,11 @@ const Dashboard = () => {
   return (
     <Container>
       <div className="flex flex-row">
-        <Menu categoryList={categoryList} setCategoryList={setCategoryList} />
+        <Menu
+          categoryList={categoryList}
+          setCategoryList={setCategoryList}
+          articlesCount={articlesCount}
+        />
         <ArticleList tableColumnHeader />
       </div>
     </Container>

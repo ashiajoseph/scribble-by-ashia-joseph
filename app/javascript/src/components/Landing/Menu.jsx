@@ -8,11 +8,13 @@ import categoriesApi from "apis/categories";
 
 import CategoryInput from "../Settings/ManageCategories/Input";
 
-const Menu = ({ categoryList, setCategoryList }) => {
+const Menu = ({ categoryList, setCategoryList, articlesCount }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [addCategory, setAddCategory] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const handleSubmit = async () => {
     try {
@@ -36,6 +38,15 @@ const Menu = ({ categoryList, setCategoryList }) => {
     } else handleSubmit();
   };
 
+  const handleCategoryClick = categoryName => {
+    const name = categoryName === selectedCategory ? "" : categoryName;
+    setSelectedCategory(name);
+  };
+  const handleStatusClick = status => {
+    const new_status = status === selectedStatus ? "All" : status;
+    setSelectedStatus(new_status);
+  };
+
   const showCategoryInput = addCategory
     ? {
         icon: Close,
@@ -48,9 +59,24 @@ const Menu = ({ categoryList, setCategoryList }) => {
 
   return (
     <MenuBar showMenu={true} title="Articles">
-      <MenuBar.Block label="All" count={0} />
-      <MenuBar.Block label="Draft" count={0} />
-      <MenuBar.Block label="Published" count={0} />
+      <MenuBar.Block
+        label="All"
+        count={articlesCount.draft + articlesCount.published}
+        active={selectedStatus === "All"}
+        onClick={() => handleStatusClick("All")}
+      />
+      <MenuBar.Block
+        label="Draft"
+        count={articlesCount.draft}
+        active={selectedStatus === "Draft"}
+        onClick={() => handleStatusClick("Draft")}
+      />
+      <MenuBar.Block
+        label="Published"
+        count={articlesCount.published}
+        active={selectedStatus === "Published"}
+        onClick={() => handleStatusClick("Published")}
+      />
 
       <MenuBar.SubTitle
         iconProps={[
@@ -92,7 +118,13 @@ const Menu = ({ categoryList, setCategoryList }) => {
             : category.name.toLowerCase().includes(searchWord.toLowerCase())
         )
         .map((category, index) => (
-          <MenuBar.Block key={index} label={category.name} count={0} />
+          <MenuBar.Block
+            key={index}
+            label={category.name}
+            count={category.article_list.length}
+            active={selectedCategory === category.name}
+            onClick={() => handleCategoryClick(category.name)}
+          />
         ))}
     </MenuBar>
   );

@@ -8,9 +8,9 @@ import Table from "./Table";
 const ArticleList = ({ filteredArticlesCount, articleList }) => {
   const [tableColumnHeader, setTableColumnHeader] = useState({
     title: true,
-    categories: true,
     date: true,
     author: true,
+    category: true,
     status: true,
   });
 
@@ -23,7 +23,7 @@ const ArticleList = ({ filteredArticlesCount, articleList }) => {
       <Typography style="h4" weight="semibold" className="pl-6 mb-10">
         {filteredArticlesCount} Articles
       </Typography>
-      <Table articleList={articleList} />
+      <Table tableColumnHeader={tableColumnHeader} articleList={articleList} />
     </div>
   );
 };

@@ -5,8 +5,6 @@ class CategoriesController < ApplicationController
 
   def index
     @category_list = Category.includes(:articles)
-    @article_list = @category_list.map { |category|
-      category.articles } + [(Article.where.missing(:category))]
   end
 
   def create

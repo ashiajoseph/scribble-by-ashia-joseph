@@ -12,6 +12,8 @@ import Menu from "./Landing/Menu";
 import SubHeader from "./Landing/SubHeader";
 import Table from "./Landing/Table";
 
+import articlesApi from "../apis/articles";
+
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
@@ -75,6 +77,24 @@ const Dashboard = () => {
     return style;
   };
 
+  const deleteArticle = async id => {
+    setLoading(true);
+    try {
+      await articlesApi.destroy(id);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = (id, article) => {
+    const toBeDeleted = window.confirm(
+      `Are you sure you want to delete article '${article}' ?`
+    );
+    if (toBeDeleted) deleteArticle(id);
+  };
+
   const filteredColumns = Object.keys(tableColumnHeader).filter(
     column => tableColumnHeader[column]
   );
@@ -94,8 +114,13 @@ const Dashboard = () => {
       {
         id: "delete",
         width: 35,
-        Cell: () => (
-          <button className="focus:outline-none" onClick={() => {}}>
+        Cell: ({ row }) => (
+          <button
+            className="focus:outline-none"
+            onClick={() => {
+              handleDelete(row.original.id, row.original.title);
+            }}
+          >
             <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
           </button>
         ),

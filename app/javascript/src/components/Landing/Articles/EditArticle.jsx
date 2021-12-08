@@ -15,6 +15,7 @@ const EditArticle = ({ history }) => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [formData, setFormData] = useState({});
+  const [defaultValue, setDefaultValue] = useState({});
   const { articleId } = useParams();
   const handleSubmit = async () => {
     setLoading(true);
@@ -60,8 +61,8 @@ const EditArticle = ({ history }) => {
   const fetchArticle = async () => {
     try {
       const response = await articlesApi.show(articleId);
-      const { article } = response.data;
-
+      const { article, category } = response.data;
+      setDefaultValue({ label: category, value: article.category_id });
       setFormData(article);
     } catch (error) {
       logger.error(error);
@@ -90,10 +91,7 @@ const EditArticle = ({ history }) => {
           categoryList={categoryList}
           formData={formData}
           setFormData={setFormData}
-          defaultValue={{
-            label: formData.category,
-            value: formData.category_id,
-          }}
+          defaultValue={defaultValue}
           handleValidation={handleValidation}
         />
       </div>

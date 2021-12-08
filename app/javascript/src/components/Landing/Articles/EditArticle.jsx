@@ -4,6 +4,7 @@ import { PageLoader } from "@bigbinary/neetoui/v2";
 
 import categoriesApi from "apis/categories";
 
+//import articlesApi from "apis/articles";
 import ArticleForm from "./Form/ArticleForm";
 
 import Container from "../../Common/Container";
@@ -15,8 +16,9 @@ const EditArticle = () => {
     title: "",
     content: "",
     category_id: "",
-    status: "draft",
+    status: "",
   });
+  //const { articleId } = useParams();
 
   const fetchCategoryList = async () => {
     try {
@@ -25,13 +27,21 @@ const EditArticle = () => {
       setCategoryList(category_list);
     } catch (error) {
       logger.error(error);
-    } finally {
       setLoading(false);
     }
   };
 
+  const fetchArticle = async () => {
+    // try{
+    // } catch (error)
+    // {
+    // } finally
+    // { setLoading(false) }
+  };
+
   useEffect(() => {
     fetchCategoryList();
+    fetchArticle();
   }, []);
 
   if (loading) {

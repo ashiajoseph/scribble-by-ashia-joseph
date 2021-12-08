@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const create = payload => axios.post("/articles", payload);
-const show = articleId => axios.get(`/quizzes/${articleId}`);
+const show = id => axios.get(`/articles/${id}`);
 const update = ({ id, payload }) => axios.put(`/articles/${id}`, payload);
 
 const articlesApi = {

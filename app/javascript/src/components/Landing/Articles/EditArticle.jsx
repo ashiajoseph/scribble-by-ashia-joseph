@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
+import { useParams } from "react-router-dom";
 
+import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 
-//import articlesApi from "apis/articles";
 import ArticleForm from "./Form/ArticleForm";
 
 import Container from "../../Common/Container";
@@ -18,7 +19,7 @@ const EditArticle = () => {
     category_id: "",
     status: "",
   });
-  //const { articleId } = useParams();
+  const { articleId } = useParams();
 
   const fetchCategoryList = async () => {
     try {
@@ -32,11 +33,14 @@ const EditArticle = () => {
   };
 
   const fetchArticle = async () => {
-    // try{
-    // } catch (error)
-    // {
-    // } finally
-    // { setLoading(false) }
+    try {
+      const response = await articlesApi.show(articleId);
+      logger.info(response);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

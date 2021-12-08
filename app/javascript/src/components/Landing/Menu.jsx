@@ -11,7 +11,6 @@ import CategoryInput from "../Settings/ManageCategories/Input";
 const Menu = ({
   categoryList,
   setCategoryList,
-  totalArticlesCount,
   displayedCount,
   setDisplayedCount,
   setFilteredArticlesCount,
@@ -54,7 +53,10 @@ const Menu = ({
     const name = categoryName === selectedCategory ? "" : categoryName;
     const articlesCount =
       categoryName === selectedCategory
-        ? totalArticlesCount
+        ? {
+            draft: displayedCount.total_draft_count,
+            published: displayedCount.total_published_count,
+          }
         : { draft: draftCount, published: publishedCount };
     const currentCount =
       selectedStatus === "All"
@@ -64,7 +66,9 @@ const Menu = ({
         : articlesCount.published;
     setFilter("category", name);
     setSelectedCategory(name);
-    setDisplayedCount(articlesCount);
+    setDisplayedCount(prev => {
+      return { ...prev, ...articlesCount };
+    });
     setFilteredArticlesCount(currentCount);
   };
 
@@ -72,7 +76,8 @@ const Menu = ({
     const new_status = status === selectedStatus ? "All" : status;
     const articlesCount =
       new_status === "All"
-        ? totalArticlesCount.draft + totalArticlesCount.published
+        ? displayedCount.total_draft_count +
+          displayedCount.total_published_count
         : count;
     const filterStatus = new_status === "All" ? "" : new_status;
     setFilter("status", filterStatus);

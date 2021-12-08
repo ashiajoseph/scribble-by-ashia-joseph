@@ -18,10 +18,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [articleList, setArticleList] = useState(["a"]);
-  const [totalArticlesCount, setTotalArticlesCount] = useState({
-    draft: 0,
-    published: 0,
-  });
+
   const [displayedCount, setDisplayedCount] = useState({
     draft: 0,
     published: 0,
@@ -51,11 +48,10 @@ const Dashboard = () => {
         article_list_without_categories,
       } = response.data;
       setFilteredArticlesCount(total_draft_count + total_published_count);
-      setTotalArticlesCount({
-        draft: total_draft_count,
-        published: total_published_count,
-      });
+
       setDisplayedCount({
+        total_draft_count: total_draft_count,
+        total_published_count: total_published_count,
         draft: total_draft_count,
         published: total_published_count,
       });
@@ -187,7 +183,6 @@ const Dashboard = () => {
         <Menu
           categoryList={categoryList}
           setCategoryList={setCategoryList}
-          totalArticlesCount={totalArticlesCount}
           displayedCount={displayedCount}
           setDisplayedCount={setDisplayedCount}
           setFilteredArticlesCount={setFilteredArticlesCount}

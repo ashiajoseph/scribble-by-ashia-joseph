@@ -142,7 +142,7 @@ const Dashboard = () => {
   const columns = useMemo(() => columnHeader, [tableColumnHeader]);
   const tableInstance = useTable({ columns: columns, data: data }, useFilters);
 
-  const filterOutArticleList = () => {
+  const filterListAndModifyCount = () => {
     const filteredArticleList = articleList.filter(
       ({ id }) => id !== articleToBeDeleted.id
     );
@@ -158,11 +158,24 @@ const Dashboard = () => {
 
       return newCategoryObject;
     });
+    const articleStatus = articleToBeDeleted.status;
+    const statusCount = displayedCount[articleStatus] - 1;
+    const totalArticlesCountOfStatus =
+      displayedCount[`total_${articleStatus}_count`] - 1;
+    setDisplayedCount(prev => {
+      return {
+        ...prev,
+        [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
+        [`${articleStatus}`]: statusCount,
+      };
+    });
+
     setArticleList(filteredArticleList);
     setCategoryList(modifiedCategoryList);
   };
+
   useEffect(() => {
-    if (articleToBeDeleted.id !== null) filterOutArticleList();
+    if (articleToBeDeleted.id !== null) filterListAndModifyCount();
   }, [articleToBeDeleted]);
 
   useEffect(() => {

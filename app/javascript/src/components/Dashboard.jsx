@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
 import { Typography } from "@bigbinary/neetoui/v2";
+import { Link } from "react-router-dom";
 import { useTable, useFilters } from "react-table";
 
 import categoriesApi from "apis/categories";
@@ -102,10 +103,10 @@ const Dashboard = () => {
       {
         id: "edit",
         width: 40,
-        Cell: () => (
-          <button className="focus:outline-none" onClick={() => {}}>
+        Cell: ({ row }) => (
+          <Link to={`/articles/${row.original.id}/edit`}>
             <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
-          </button>
+          </Link>
         ),
       }
     );

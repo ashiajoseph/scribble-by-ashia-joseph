@@ -19,7 +19,7 @@ const CategoryList = ({
 }) => {
   const deleteCategory = async (idToBeDeleted, categoryRef) => {
     try {
-      categoryRef.current.style.display = "none";
+      categoryRef.current.className = "hidden";
       await categoriesApi.destroy(idToBeDeleted);
     } catch (error) {
       logger.error(error);
@@ -56,7 +56,7 @@ const CategoryList = ({
           />
         )}
       </div>
-      <div id="category-list" className="overflow-y-scroll">
+      <div id="category-list" className="">
         {categoryList.map(({ id, name }, index) => (
           <Category
             key={index}

@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :load_category, except: %i[index create]
 
   def index
-    @category_list = Category.includes(:articles)
+    @category_list = Category.includes(:articles).order("position ASC")
   end
 
   def create

@@ -55,7 +55,7 @@ const Category = ({ id, name, deleteCategory }) => {
   return (
     <div
       id={id}
-      className="flex  py-3 border-t-2 border-gray-100 border-solid"
+      className="flex py-3 border-t-2 border-gray-100 border-solid "
       ref={categoryRef}
     >
       <div className="flex flex-row items-center">

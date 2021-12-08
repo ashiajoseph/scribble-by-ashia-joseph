@@ -17,7 +17,7 @@ import articlesApi from "../apis/articles";
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
-  const [articleList, setArticleList] = useState([]);
+  const [articleList, setArticleList] = useState(["a"]);
   const [totalArticlesCount, setTotalArticlesCount] = useState({
     draft: 0,
     published: 0,
@@ -33,6 +33,11 @@ const Dashboard = () => {
     author: true,
     category: true,
     status: true,
+  });
+  const [articleToBeDeleted, setArticleToBeDeleted] = useState({
+    id: null,
+    status: "",
+    category: "",
   });
 
   const fetchCategoryList = async () => {
@@ -77,10 +82,11 @@ const Dashboard = () => {
     return style;
   };
 
-  const deleteArticle = async id => {
+  const deleteArticle = async article => {
     setLoading(true);
+    setArticleToBeDeleted(article);
     try {
-      await articlesApi.destroy(id);
+      await articlesApi.destroy(article.id);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -88,11 +94,11 @@ const Dashboard = () => {
     }
   };
 
-  const handleDelete = (id, article) => {
+  const handleDelete = article => {
     const toBeDeleted = window.confirm(
-      `Are you sure you want to delete article '${article}' ?`
+      `Are you sure you want to delete article '${article.title}' ?`
     );
-    if (toBeDeleted) deleteArticle(id);
+    if (toBeDeleted) deleteArticle(article);
   };
 
   const filteredColumns = Object.keys(tableColumnHeader).filter(
@@ -118,7 +124,7 @@ const Dashboard = () => {
           <button
             className="focus:outline-none"
             onClick={() => {
-              handleDelete(row.original.id, row.original.title);
+              handleDelete(row.original);
             }}
           >
             <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
@@ -139,6 +145,29 @@ const Dashboard = () => {
   const data = useMemo(() => articleList, [articleList]);
   const columns = useMemo(() => columnHeader, [tableColumnHeader]);
   const tableInstance = useTable({ columns: columns, data: data }, useFilters);
+
+  const filterOutArticleList = () => {
+    const filteredArticleList = articleList.filter(
+      ({ id }) => id !== articleToBeDeleted.id
+    );
+
+    const modifiedCategoryList = categoryList.map(category => {
+      const newCategoryObject = { ...category };
+      if (category.id === articleToBeDeleted.category_id) {
+        newCategoryObject[articleToBeDeleted.status] =
+          articleToBeDeleted.status === "draft"
+            ? category["draft"] - 1
+            : category["published"] - 1;
+      }
+
+      return newCategoryObject;
+    });
+    setArticleList(filteredArticleList);
+    setCategoryList(modifiedCategoryList);
+  };
+  useEffect(() => {
+    if (articleToBeDeleted.id !== null) filterOutArticleList();
+  }, [articleToBeDeleted]);
 
   useEffect(() => {
     fetchCategoryList();

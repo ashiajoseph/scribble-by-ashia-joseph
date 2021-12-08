@@ -24,13 +24,7 @@ const Dashboard = () => {
     published: 0,
   });
   const [filteredArticlesCount, setFilteredArticlesCount] = useState();
-  const [tableColumnHeader, setTableColumnHeader] = useState({
-    title: true,
-    date: true,
-    author: true,
-    category: true,
-    status: true,
-  });
+  const tableColumnHeader = ["title", "date", "author", "category", "status"];
   const [articleToBeDeleted, setArticleToBeDeleted] = useState({
     id: null,
     status: "",
@@ -69,24 +63,12 @@ const Dashboard = () => {
     }
   };
 
-  const applyStyle = column => {
-    let style = "";
-    const cols = ["author", "category", "status"];
-    if (column === "title") style = "text-indigo-500 font-medium";
-    else if (cols.includes(column)) style = "neeto-ui-text-gray-600";
-
-    return style;
-  };
-
   const deleteArticle = async article => {
-    setLoading(true);
     setArticleToBeDeleted(article);
     try {
       await articlesApi.destroy(article.id);
     } catch (error) {
       logger.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -97,10 +79,16 @@ const Dashboard = () => {
     if (toBeDeleted) deleteArticle(article);
   };
 
-  const filteredColumns = Object.keys(tableColumnHeader).filter(
-    column => tableColumnHeader[column]
-  );
-  const columnHeader = filteredColumns.map(column => {
+  const applyStyle = column => {
+    let style = "";
+    const cols = ["author", "category", "status"];
+    if (column === "title") style = "text-indigo-500 font-medium";
+    else if (cols.includes(column)) style = "neeto-ui-text-gray-600";
+
+    return style;
+  };
+
+  const columnHeader = tableColumnHeader.map(column => {
     return {
       id: column,
       Header: column.toUpperCase(),
@@ -110,36 +98,34 @@ const Dashboard = () => {
       ),
     };
   });
+  columnHeader.push(
+    {
+      id: "delete",
+      width: 35,
+      Cell: ({ row }) => (
+        <button
+          className="focus:outline-none"
+          onClick={() => {
+            handleDelete(row.original);
+          }}
+        >
+          <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
+        </button>
+      ),
+    },
+    {
+      id: "edit",
+      width: 40,
+      Cell: ({ row }) => (
+        <Link to={`/articles/${row.original.id}/edit`}>
+          <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
+        </Link>
+      ),
+    }
+  );
 
-  if (filteredColumns.length !== 0) {
-    columnHeader.push(
-      {
-        id: "delete",
-        width: 35,
-        Cell: ({ row }) => (
-          <button
-            className="focus:outline-none"
-            onClick={() => {
-              handleDelete(row.original);
-            }}
-          >
-            <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
-          </button>
-        ),
-      },
-      {
-        id: "edit",
-        width: 40,
-        Cell: ({ row }) => (
-          <Link to={`/articles/${row.original.id}/edit`}>
-            <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
-          </Link>
-        ),
-      }
-    );
-  }
   const data = useMemo(() => articleList, [articleList]);
-  const columns = useMemo(() => columnHeader, [tableColumnHeader]);
+  const columns = useMemo(() => columnHeader, []);
   const tableInstance = useTable({ columns: columns, data: data }, useFilters);
 
   const filterListAndModifyCount = () => {
@@ -162,6 +148,7 @@ const Dashboard = () => {
     const statusCount = displayedCount[articleStatus] - 1;
     const totalArticlesCountOfStatus =
       displayedCount[`total_${articleStatus}_count`] - 1;
+    setFilteredArticlesCount(prev => prev - 1);
     setDisplayedCount(prev => {
       return {
         ...prev,
@@ -202,11 +189,7 @@ const Dashboard = () => {
           tableInstance={tableInstance}
         />
         <div className="w-full my-3">
-          <SubHeader
-            tableColumnHeader={tableColumnHeader}
-            setTableColumnHeader={setTableColumnHeader}
-            tableInstance={tableInstance}
-          />
+          <SubHeader tableInstance={tableInstance} />
           <Typography style="h4" weight="semibold" className="pl-6 mb-10">
             {filteredArticlesCount} Articles
           </Typography>

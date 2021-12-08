@@ -4,18 +4,8 @@ import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Dropdown, Checkbox, Input } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 
-const SubHeader = ({
-  tableColumnHeader,
-  setTableColumnHeader,
-  tableInstance,
-}) => {
-  const { setFilter } = tableInstance;
-  const toggleCheckbox = e => {
-    const { id, checked } = e.target;
-    setTableColumnHeader(prev => {
-      return { ...prev, [id]: checked };
-    });
-  };
+const SubHeader = ({ tableInstance }) => {
+  const { setFilter, allColumns } = tableInstance;
 
   const handleChange = e => {
     setFilter("title", e.target.value);
@@ -38,14 +28,13 @@ const SubHeader = ({
           closeOnSelect={false}
         >
           <h5 className="font-bold py-2 px-3">Columns</h5>
-          {Object.keys(tableColumnHeader).map((column, index) => (
-            <li key={index} className="capitalize text-color-black">
+          {allColumns.slice(0, -2).map(column => (
+            <li key={column.id} className="capitalize text-color-black">
               <Checkbox
-                checked={tableColumnHeader[column]}
-                id={column}
-                label={column}
-                style={{ color: "#6366F1" }}
-                onChange={toggleCheckbox}
+                label={column.id}
+                className="text-indigo-500"
+                {...column.getToggleHiddenProps()}
+                style={{ color: "#6366F1", cursor: "pointer" }}
               />
             </li>
           ))}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { PageLoader } from "@bigbinary/neetoui/v2";
+import { PageLoader, Toastr } from "@bigbinary/neetoui/v2";
+import { isNil, isEmpty, either } from "ramda";
 import { useParams } from "react-router-dom";
 
 import articlesApi from "apis/articles";
@@ -10,11 +11,40 @@ import ArticleForm from "./Form/ArticleForm";
 
 import Container from "../../Common/Container";
 
-const EditArticle = () => {
+const EditArticle = ({ history }) => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [formData, setFormData] = useState({});
   const { articleId } = useParams();
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await articlesApi.update({
+        id: articleId,
+        payload: { article: formData },
+      });
+      setLoading(false);
+      history.push("/");
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
+
+  const handleValidation = e => {
+    e.preventDefault();
+
+    const emptyFieldPresent = Object.keys(formData).some(field => {
+      const value =
+        typeof formData[field] === "string"
+          ? formData[field].trim()
+          : formData[field];
+      return either(isEmpty, isNil)(value);
+    });
+    if (emptyFieldPresent) {
+      Toastr.error(Error("Please do not leave any fields blank"));
+    } else handleSubmit();
+  };
 
   const fetchCategoryList = async () => {
     try {
@@ -64,7 +94,7 @@ const EditArticle = () => {
             label: formData.category,
             value: formData.category_id,
           }}
-          // handleValidation={handleValidation}
+          handleValidation={handleValidation}
         />
       </div>
     </Container>

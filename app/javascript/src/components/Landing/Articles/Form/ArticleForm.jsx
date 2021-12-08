@@ -80,7 +80,7 @@ const ArticleForm = ({
         </div>
       </div>
       <Textarea
-        label="Articles Body"
+        label="Article Body"
         rows={30}
         className="mb-5"
         name="content"

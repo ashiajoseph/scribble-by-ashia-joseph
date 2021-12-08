@@ -2,7 +2,7 @@
 
 class ArticlesController < ApplicationController
   before_action :load_category, only: :create
-  before_action :load_article, only: %i[show]
+  before_action :load_article, only: %i[show update]
   def create
     article = @category.articles.new(article_params)
     if article.save
@@ -16,6 +16,14 @@ class ArticlesController < ApplicationController
   end
 
   def show
+  end
+
+  def update
+    if @article.update(article_params)
+      render status: :ok, json: { notice: t("successfully_updated", entity: "Article") }
+    else
+      render status: :unprocessable_entity, json: { error: @article.errors.full_messages.to_sentence }
+    end
   end
 
   private

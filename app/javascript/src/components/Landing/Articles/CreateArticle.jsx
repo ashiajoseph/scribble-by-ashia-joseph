@@ -37,11 +37,16 @@ const CreateArticle = ({ history }) => {
 
   const handleValidation = e => {
     e.preventDefault();
-    const emptyFieldPresent = Object.keys(formData).some(field =>
-      either(isEmpty, isNil)(formData[field])
-    );
-    if (emptyFieldPresent) Toastr.error(Error("Please fill all the Fields"));
-    else handleSubmit();
+    const emptyFieldPresent = Object.keys(formData).some(field => {
+      const value =
+        typeof formData[field] === "string"
+          ? formData[field].trim()
+          : formData[field];
+      return either(isEmpty, isNil)(value);
+    });
+    if (emptyFieldPresent) {
+      Toastr.error(Error("Please do not leave any fields blank"));
+    } else handleSubmit();
   };
 
   const fetchCategoryList = async () => {

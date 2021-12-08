@@ -7,6 +7,7 @@ import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
 import CreateArticle from "components/Landing/Articles/CreateArticle";
+import EditArticle from "components/Landing/Articles/EditArticle";
 import Settings from "components/Settings/index";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/settings" component={Settings} />
         <Route exact path="/articles/new" component={CreateArticle} />
+        <Route exact path="/articles/:articleid/edit" component={EditArticle} />
       </Switch>
     </Router>
   );

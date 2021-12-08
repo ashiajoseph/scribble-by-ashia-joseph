@@ -31,7 +31,10 @@ const Menu = ({
         category: { name: category },
       });
       const { new_category } = response.data;
-      setCategoryList(prevList => [...prevList, new_category]);
+      setCategoryList(prevList => [
+        ...prevList,
+        { ...new_category, draft: 0, published: 0 },
+      ]);
       setCategory("");
       setAddCategory(false);
     } catch (error) {

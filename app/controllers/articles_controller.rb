@@ -2,7 +2,7 @@
 
 class ArticlesController < ApplicationController
   before_action :load_category, only: :create
-  before_action :load_article, only: %i[show update]
+  before_action :load_article, only: %i[show update destroy]
   def create
     article = @category.articles.new(article_params)
     if article.save
@@ -12,6 +12,14 @@ class ArticlesController < ApplicationController
     else
       error = article.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { error: error }
+    end
+  end
+
+  def destroy
+    if @article.destroy
+      render status: :ok, json: { notice: t("deleted_successfully") }
+    else
+      render status: :unprocessable_entity, json: { error: @article.errors.full_messages.to_sentence }
     end
   end
 

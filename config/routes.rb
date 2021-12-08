@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         put "reorder_position"
       end
     end
-    resources :articles, only: %i[create show update]
+    resources :articles, except: %i[index new edit]
   end
 
   root "home#index"

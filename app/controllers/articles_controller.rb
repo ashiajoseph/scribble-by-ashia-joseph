@@ -16,7 +16,6 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    puts params
   end
 
   private

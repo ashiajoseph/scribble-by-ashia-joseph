@@ -13,12 +13,7 @@ import Container from "../../Common/Container";
 const EditArticle = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    category_id: "",
-    status: "",
-  });
+  const [formData, setFormData] = useState({});
   const { articleId } = useParams();
 
   const fetchCategoryList = async () => {
@@ -35,7 +30,9 @@ const EditArticle = () => {
   const fetchArticle = async () => {
     try {
       const response = await articlesApi.show(articleId);
-      logger.info(response);
+      const { article } = response.data;
+
+      setFormData(article);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -63,6 +60,10 @@ const EditArticle = () => {
           categoryList={categoryList}
           formData={formData}
           setFormData={setFormData}
+          defaultValue={{
+            label: formData.category,
+            value: formData.category_id,
+          }}
           // handleValidation={handleValidation}
         />
       </div>

@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const fetchCategoryList = async () => {
     try {
-      const response = await categoriesApi.list();
+      const response = await categoriesApi.retrieve_category_and_article_list();
       const {
         total_draft_count,
         total_published_count,
@@ -63,12 +63,14 @@ const Dashboard = () => {
   };
 
   const deleteArticle = async article => {
+    setLoading(true);
     setArticleToBeDeleted(article);
     try {
       await articlesApi.destroy(article.id);
     } catch (error) {
       logger.error(error);
     }
+    setLoading(false);
   };
 
   const handleDelete = article => {

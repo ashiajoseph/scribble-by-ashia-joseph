@@ -5,6 +5,7 @@ import { Typography } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 import { useTable, useFilters } from "react-table";
 
+import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 
 import Container from "./Common/Container";
@@ -12,15 +13,11 @@ import Menu from "./Landing/Menu";
 import SubHeader from "./Landing/SubHeader";
 import Table from "./Landing/Table";
 
-import articlesApi from "../apis/articles";
-
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [articleList, setArticleList] = useState([]);
   const [articleToBeDeleted, setArticleToBeDeleted] = useState({
     id: null,
-    status: "",
-    category: "",
   });
   const [categoryList, setCategoryList] = useState([]);
   const [displayedCount, setDisplayedCount] = useState({
@@ -130,7 +127,22 @@ const Dashboard = () => {
   const columns = useMemo(() => columnHeader, []);
   const tableInstance = useTable({ columns: columns, data: data }, useFilters);
 
-  const filterListAndModifyCount = () => {
+  const modifyCount = () => {
+    const articleStatus = articleToBeDeleted.status;
+    const statusCount = displayedCount[articleStatus] - 1;
+    const totalArticlesCountOfStatus =
+      displayedCount[`total_${articleStatus}_count`] - 1;
+    setFilteredArticlesCount(prev => prev - 1);
+    setDisplayedCount(prev => {
+      return {
+        ...prev,
+        [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
+        [`${articleStatus}`]: statusCount,
+      };
+    });
+  };
+
+  const modifyList = () => {
     const filteredArticleList = articleList.filter(
       ({ id }) => id !== articleToBeDeleted.id
     );
@@ -146,25 +158,16 @@ const Dashboard = () => {
 
       return newCategoryObject;
     });
-    const articleStatus = articleToBeDeleted.status;
-    const statusCount = displayedCount[articleStatus] - 1;
-    const totalArticlesCountOfStatus =
-      displayedCount[`total_${articleStatus}_count`] - 1;
-    setFilteredArticlesCount(prev => prev - 1);
-    setDisplayedCount(prev => {
-      return {
-        ...prev,
-        [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
-        [`${articleStatus}`]: statusCount,
-      };
-    });
-
     setArticleList(filteredArticleList);
     setCategoryList(modifiedCategoryList);
   };
 
   useEffect(() => {
-    if (articleToBeDeleted.id !== null) filterListAndModifyCount();
+    if (articleToBeDeleted.id !== null) {
+      modifyList();
+      modifyCount();
+      setArticleToBeDeleted({ id: null });
+    }
   }, [articleToBeDeleted]);
 
   useEffect(() => {

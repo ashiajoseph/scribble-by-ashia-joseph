@@ -20,7 +20,6 @@ const EditArticle = ({ history }) => {
 
   const handleValidation = e => {
     e.preventDefault();
-
     const emptyFieldPresent = Object.keys(formData).some(field => {
       const value =
         typeof formData[field] === "string"

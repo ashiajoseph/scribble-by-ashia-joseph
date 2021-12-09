@@ -7,10 +7,23 @@ import categoriesApi from "apis/categories";
 import CategoryList from "./CategoryList";
 
 const ManageCategories = () => {
-  const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showCategoryInput, setShowCategoryInput] = useState(false);
+
+  const handleDrop = async e => {
+    const droppedElementId = parseInt(e.item.id);
+    const newPosition = e.newIndex + 1;
+    try {
+      await categoriesApi.reorder_position({
+        id: droppedElementId,
+        payload: { position: newPosition },
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -33,19 +46,6 @@ const ManageCategories = () => {
       Toastr.error(Error("Category Name can't be blank"));
       setCategory("");
     } else handleSubmit();
-  };
-
-  const handleDrop = async e => {
-    const droppedElementId = parseInt(e.item.id);
-    const newPosition = e.newIndex + 1;
-    try {
-      await categoriesApi.reorder_position({
-        id: droppedElementId,
-        payload: { position: newPosition },
-      });
-    } catch (error) {
-      logger.error(error);
-    }
   };
 
   const fetchCategoryList = async () => {

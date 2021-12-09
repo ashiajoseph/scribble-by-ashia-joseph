@@ -23,6 +23,10 @@ const ArticleForm = ({
     articleTitleRef.current.focus();
   }, []);
 
+  const handleCancel = () => {
+    history.push("/");
+  };
+
   const handleChangeOfInput = e => {
     const { name, value } = e.target;
     setFormData(prevData => {
@@ -41,10 +45,6 @@ const ArticleForm = ({
     setFormData(prevData => {
       return { ...prevData, ["status"]: status };
     });
-  };
-
-  const handleCancel = () => {
-    history.push("/");
   };
 
   return (

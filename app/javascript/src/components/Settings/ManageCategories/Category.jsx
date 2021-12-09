@@ -8,9 +8,9 @@ import categoriesApi from "apis/categories";
 import CategoryInput from "./Input";
 
 const Category = ({ id, name, deleteCategory }) => {
-  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const categoryRef = useRef();
 
   const handleEdit = async () => {

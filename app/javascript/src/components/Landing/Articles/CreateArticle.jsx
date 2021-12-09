@@ -11,7 +11,6 @@ import ArticleForm from "./Form/ArticleForm";
 import Container from "../../Common/Container";
 
 const CreateArticle = ({ history }) => {
-  const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -19,7 +18,7 @@ const CreateArticle = ({ history }) => {
     category_id: "",
     status: "draft",
   });
-
+  const [loading, setLoading] = useState(true);
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -54,6 +53,9 @@ const CreateArticle = ({ history }) => {
       const response = await categoriesApi.list();
       const { category_list } = response.data;
       setCategoryList(category_list);
+      if (category_list.length === 0) {
+        Toastr.error(Error("Please create a category first"));
+      }
     } catch (error) {
       logger.error(error);
     } finally {

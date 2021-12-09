@@ -12,25 +12,11 @@ import ArticleForm from "./Form/ArticleForm";
 import Container from "../../Common/Container";
 
 const EditArticle = ({ history }) => {
-  const [loading, setLoading] = useState(true);
-  const [categoryList, setCategoryList] = useState([]);
-  const [formData, setFormData] = useState({});
-  const [defaultValue, setDefaultValue] = useState({});
   const { articleId } = useParams();
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      await articlesApi.update({
-        id: articleId,
-        payload: { article: formData },
-      });
-      setLoading(false);
-      history.push("/");
-    } catch (error) {
-      logger.error(error);
-      setLoading(false);
-    }
-  };
+  const [categoryList, setCategoryList] = useState([]);
+  const [defaultValue, setDefaultValue] = useState({});
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleValidation = e => {
     e.preventDefault();
@@ -47,11 +33,15 @@ const EditArticle = ({ history }) => {
     } else handleSubmit();
   };
 
-  const fetchCategoryList = async () => {
+  const handleSubmit = async () => {
+    setLoading(true);
     try {
-      const response = await categoriesApi.list();
-      const { category_list } = response.data;
-      setCategoryList(category_list);
+      await articlesApi.update({
+        id: articleId,
+        payload: { article: formData },
+      });
+      setLoading(false);
+      history.push("/");
     } catch (error) {
       logger.error(error);
       setLoading(false);
@@ -67,6 +57,17 @@ const EditArticle = ({ history }) => {
     } catch (error) {
       logger.error(error);
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCategoryList = async () => {
+    try {
+      const response = await categoriesApi.list();
+      const { category_list } = response.data;
+      setCategoryList(category_list);
+    } catch (error) {
+      logger.error(error);
       setLoading(false);
     }
   };

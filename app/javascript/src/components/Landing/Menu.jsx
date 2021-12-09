@@ -16,10 +16,10 @@ const Menu = ({
   setFilteredArticlesCount,
   tableInstance,
 }) => {
-  const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [addCategory, setAddCategory] = useState(false);
-  const [searchWord, setSearchWord] = useState("");
   const [category, setCategory] = useState("");
+  const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const [searchWord, setSearchWord] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const { setFilter } = tableInstance;

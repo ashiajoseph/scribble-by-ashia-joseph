@@ -19,7 +19,7 @@ const NavBar = () => {
           Articles
         </NavLink>
         <NavLink
-          to="/settings"
+          to="/settings/categories"
           className={isActive =>
             (isActive ? "text-indigo-500" : "text-gray-400") + " ml-6"
           }

@@ -10,6 +10,7 @@ const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
       <MenuItem
         title="General"
         description="Page Title, Brand Name&Meta Description"
+        link="/settings/general"
         selectedSettingOption={selectedSettingOption}
         setSelectedSettingOption={setSelectedSettingOption}
       >
@@ -18,6 +19,7 @@ const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
       <MenuItem
         title="Redirections"
         description="Create & configure redirection rules"
+        link="/settings/redirection"
         selectedSettingOption={selectedSettingOption}
         setSelectedSettingOption={setSelectedSettingOption}
       >
@@ -26,6 +28,7 @@ const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
       <MenuItem
         title="Manage categories"
         description="Edit and Reorder KB Structure"
+        link="/settings/categories"
         selectedSettingOption={selectedSettingOption}
         setSelectedSettingOption={setSelectedSettingOption}
       >

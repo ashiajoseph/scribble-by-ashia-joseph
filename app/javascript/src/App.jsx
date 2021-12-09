@@ -8,7 +8,8 @@ import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
 import CreateArticle from "components/Landing/Articles/CreateArticle";
 import EditArticle from "components/Landing/Articles/EditArticle";
-import Settings from "components/Settings/index";
+import General from "components/Settings/General";
+import ManageCategories from "components/Settings/ManageCategories";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,8 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/settings/categories" component={ManageCategories} />
+        <Route exact path="/settings/general" component={General} />
         <Route exact path="/articles/new" component={CreateArticle} />
         <Route exact path="/articles/:articleId/edit" component={EditArticle} />
       </Switch>

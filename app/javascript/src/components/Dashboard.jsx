@@ -16,20 +16,19 @@ import articlesApi from "../apis/articles";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
+  const [articleList, setArticleList] = useState([]);
+  const [articleToBeDeleted, setArticleToBeDeleted] = useState({
+    id: null,
+    status: "",
+    category: "",
+  });
   const [categoryList, setCategoryList] = useState([]);
-  const [articleList, setArticleList] = useState(["a"]);
-
   const [displayedCount, setDisplayedCount] = useState({
     draft: 0,
     published: 0,
   });
   const [filteredArticlesCount, setFilteredArticlesCount] = useState();
   const tableColumnHeader = ["title", "date", "author", "category", "status"];
-  const [articleToBeDeleted, setArticleToBeDeleted] = useState({
-    id: null,
-    status: "",
-    category: "",
-  });
 
   const fetchCategoryList = async () => {
     try {
@@ -93,6 +92,7 @@ const Dashboard = () => {
       id: column,
       Header: column.toUpperCase(),
       accessor: column,
+      filter: column === "category" ? "equals" : "fuzzyText",
       Cell: ({ row }) => (
         <span className={applyStyle(column)}>{row.values[column]}</span>
       ),
@@ -187,6 +187,7 @@ const Dashboard = () => {
           setDisplayedCount={setDisplayedCount}
           setFilteredArticlesCount={setFilteredArticlesCount}
           tableInstance={tableInstance}
+          articleList={articleList}
         />
         <div className="w-full my-3">
           <SubHeader tableInstance={tableInstance} />

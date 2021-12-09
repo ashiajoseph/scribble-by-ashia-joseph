@@ -64,7 +64,10 @@ const Menu = ({
         : selectedStatus === "Draft"
         ? articlesCount.draft
         : articlesCount.published;
-    setFilter("category", name);
+
+    name === ""
+      ? setFilter("category", undefined)
+      : setFilter("category", name);
     setSelectedCategory(name);
     setDisplayedCount(prev => {
       return { ...prev, ...articlesCount };
@@ -76,8 +79,7 @@ const Menu = ({
     const new_status = status === selectedStatus ? "All" : status;
     const articlesCount =
       new_status === "All"
-        ? displayedCount.total_draft_count +
-          displayedCount.total_published_count
+        ? displayedCount.draft + displayedCount.published
         : count;
     const filterStatus = new_status === "All" ? "" : new_status;
     setFilter("status", filterStatus);

@@ -4,7 +4,7 @@ require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
   def setup
-    @category = Category.new(name: "Sample")
+    @category = build(:category)
   end
 
   def test_category_should_be_valid

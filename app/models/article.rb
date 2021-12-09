@@ -4,6 +4,7 @@ class Article < ApplicationRecord
   belongs_to :category, optional: true
   validates :title, presence: true, length: { maximum: Constants::MAX_NAME_LENGTH }
   validates :content, presence: true
+  validates :date, presence: true
   enum status: { draft: "draft", published: "published" }
 
   before_validation :set_date

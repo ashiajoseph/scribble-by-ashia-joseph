@@ -3,13 +3,18 @@ import React, { useEffect, useRef } from "react";
 import { Check } from "@bigbinary/neeto-icons";
 import { Input } from "@bigbinary/neetoui/v2";
 
-const CategoryInput = ({ category = "", setCategory, handleSubmit }) => {
+const CategoryInput = ({
+  category = "",
+  setCategory,
+  handleSubmit,
+  width = "",
+}) => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
   return (
-    <div className="w-1/2">
+    <div className={width}>
       <Input
         suffix={
           <button className="focus:outline-none" onClick={handleSubmit}>

@@ -1,31 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import { Typography } from "@bigbinary/neetoui/v2";
-import { PageLoader } from "@bigbinary/neetoui/v2";
+import { Typography, PageLoader, Toastr } from "@bigbinary/neetoui/v2";
 
 import categoriesApi from "apis/categories";
 
 import CategoryList from "./CategoryList";
 
 const ManageCategories = () => {
-  const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showCategoryInput, setShowCategoryInput] = useState(false);
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      await categoriesApi.create({ category: { name: category } });
-      setCategory("");
-      fetchCategoryList();
-    } catch (error) {
-      logger.error(error);
-      setLoading(false);
-    } finally {
-      setShowCategoryInput(false);
-    }
-  };
 
   const handleDrop = async e => {
     const droppedElementId = parseInt(e.item.id);
@@ -38,6 +23,29 @@ const ManageCategories = () => {
     } catch (error) {
       logger.error(error);
     }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await categoriesApi.create({
+        category: { name: category },
+      });
+      const { new_category } = response.data;
+      setCategoryList(prevList => [...prevList, new_category]);
+      setCategory("");
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setShowCategoryInput(false);
+    }
+  };
+
+  const handleValidation = () => {
+    const categoryName = category.trim();
+    if (categoryName.length === 0) {
+      Toastr.error(Error("Category Name can't be blank"));
+      setCategory("");
+    } else handleSubmit();
   };
 
   const fetchCategoryList = async () => {
@@ -66,7 +74,7 @@ const ManageCategories = () => {
   }
 
   return (
-    <div className="mt-12 mb-6 ">
+    <div className="mt-12 mb-6">
       <Typography
         style="h3"
         className="neeto-ui-text-gray-800 font-semibold mb-1"
@@ -86,7 +94,7 @@ const ManageCategories = () => {
         setCategory={setCategory}
         showCategoryInput={showCategoryInput}
         setShowCategoryInput={setShowCategoryInput}
-        handleSubmit={handleSubmit}
+        handleValidation={handleValidation}
         handleDrop={handleDrop}
       />
     </div>

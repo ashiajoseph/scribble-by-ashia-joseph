@@ -1,4 +1,5 @@
 module.exports = {
+  important: true,
   future: {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
@@ -12,7 +13,11 @@ module.exports = {
       },
       width: {
         '45': '45%',
-        '85' : '85%'
+        '85': '85%',
+        '30': '30%',
+        '35': '35%',
+        '62': '62%',
+        '95': '95%'
       }
     },
   },

@@ -8,9 +8,9 @@ import categoriesApi from "apis/categories";
 import CategoryInput from "./Input";
 
 const Category = ({ id, name, deleteCategory }) => {
-  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [category, setCategory] = useState(name);
   const [loading, setLoading] = useState(false);
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const categoryRef = useRef();
 
   const handleEdit = async () => {
@@ -46,7 +46,7 @@ const Category = ({ id, name, deleteCategory }) => {
   if (loading) {
     return (
       <div className="py-3 border-t-2 border-gray-100 border-solid text-gray-400">
-        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>
+        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move"></i>
         Editing ...
       </div>
     );
@@ -55,11 +55,11 @@ const Category = ({ id, name, deleteCategory }) => {
   return (
     <div
       id={id}
-      className="flex  py-3 border-t-2 border-gray-100 border-solid"
+      className="flex py-3 border-t-2 border-gray-100 border-solid"
       ref={categoryRef}
     >
       <div className="flex flex-row items-center">
-        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move	"></i>
+        <i className="ri-drag-move-2-line mr-2 neeto-ui-text-gray-500 cursor-move"></i>
       </div>
       {!showCategoryInput && (
         <div className="flex justify-between w-full">
@@ -94,6 +94,7 @@ const Category = ({ id, name, deleteCategory }) => {
           category={category}
           setCategory={setCategory}
           handleSubmit={handleValidation}
+          width="w-1/2"
         />
       )}
     </div>

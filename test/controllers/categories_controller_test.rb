@@ -4,7 +4,7 @@ require "test_helper"
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @category = Category.create!(name: "Sample")
+    @category = create(:category)
   end
 
   def test_should_list_all_categories
@@ -59,7 +59,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_update_category_position
-    category2 = Category.create!(name: "Sample 2")
+    category2 = create(:category)
     put reorder_position_category_path(@category.id), params: { category: { position: 2 } }
     assert_response :success
     @category.reload
@@ -69,10 +69,23 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_negative_position_updates_category_with_postiton_1
-    category2 = Category.create!(name: "Sample 2")
+    category2 = create(:category)
     put reorder_position_category_path(category2.id), params: { category: { position: -3 } }
     assert_response :success
     category2.reload
     assert_equal category2.position, 1
+  end
+
+  def test_category_and_article_list_retrieved
+    create_list(:article, 5, :draft)
+    create_list(:article, 5, :published)
+    delete category_path(@category.id)
+    get retrieve_category_and_article_list_categories_path
+    assert_response :success
+    assert_equal response.parsed_body["category_list"].size, Category.all.size
+    total_articles_without_categories = Article.where.missing(:category).size
+    total_articles_with_categories = Article.all.size - total_articles_without_categories
+    articles_with_category_list = response.parsed_body["article_list_with_categories"].flatten
+    assert_equal articles_with_category_list.size, total_articles_with_categories
   end
 end

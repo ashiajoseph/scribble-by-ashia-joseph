@@ -14,12 +14,12 @@ const CategoryList = ({
   setCategory,
   showCategoryInput,
   setShowCategoryInput,
-  handleSubmit,
+  handleValidation,
   handleDrop,
 }) => {
   const deleteCategory = async (idToBeDeleted, categoryRef) => {
     try {
-      categoryRef.current.style.display = "none";
+      categoryRef.current.className = "hidden";
       await categoriesApi.destroy(idToBeDeleted);
     } catch (error) {
       logger.error(error);
@@ -51,11 +51,12 @@ const CategoryList = ({
           <CategoryInput
             category={category}
             setCategory={setCategory}
-            handleSubmit={handleSubmit}
+            handleSubmit={handleValidation}
+            width="w-1/2"
           />
         )}
       </div>
-      <div id="category-list" className="overflow-y-scroll">
+      <div id="category-list" className="">
         {categoryList.map(({ id, name }, index) => (
           <Category
             key={index}

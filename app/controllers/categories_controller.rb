@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category, except: %i[index create]
+  before_action :load_category, except: %i[index create  retrieve_category_and_article_list]
 
   def index
-    @category_list = Category.all.order("position ASC")
+    @category_list = Category.order("position ASC")
   end
 
   def create
     category = Category.new(category_params)
     if category.save
-      render status: :ok, json: { notice: t("successfully_created", entity: "Category") }
+      render status: :ok, json: {
+        notice: t("successfully_created", entity: "Category"),
+        new_category: { id: category.id, name: category.name, position: category.position }
+      }
     else
       error = category.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { error: error }
@@ -31,6 +34,10 @@ class CategoriesController < ApplicationController
     else
       render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
     end
+  end
+
+  def retrieve_category_and_article_list
+    @category_list = Category.includes(:articles).order("position ASC")
   end
 
   def update

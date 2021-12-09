@@ -5,6 +5,6 @@ FactoryBot.define do
     category
     title { Faker::Lorem.characters(number: 125) }
     content { Faker::Lorem.paragraph }
-    status { "draft" }
+    traits_for_enum :status, %w[draft publish]
   end
 end

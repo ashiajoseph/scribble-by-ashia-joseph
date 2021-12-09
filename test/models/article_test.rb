@@ -4,7 +4,7 @@ require "test_helper"
 
 class ArticleTest < ActiveSupport::TestCase
   def setup
-    @article = create(:article)
+    @article = create(:article, :draft)
   end
 
   def test_article_should_be_valid

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 json.total_draft_count Article.draft.count
 json.total_published_count Article.published.count

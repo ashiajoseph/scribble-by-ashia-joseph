@@ -21,10 +21,12 @@ const General = () => {
   const handleSubmit = () => {
     try {
       websiteApi.update({
-        website: { name: siteName, password_digest: password },
+        website: { name: siteName, password: password },
       });
       setPassword(null);
       setShowPassword(false);
+      setDefaultWebsiteInfo(siteName);
+      setIsValidPassword(false);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -73,7 +75,7 @@ const General = () => {
     <Container>
       <div className="flex h-full">
         <MenuBar />
-        <div className="w-28 mx-auto mt-6 mb-6">
+        <div className="w-28 mx-auto mt-6 mb-3">
           <Typography
             style="h3"
             className="neeto-ui-text-gray-800 font-semibold mb-1"

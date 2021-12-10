@@ -17,7 +17,7 @@ class WebsitesController < ApplicationController
   private
 
     def website_params
-      params.require(:website).permit(:name, :password_digest)
+      params.require(:website).permit(:name, :password)
     end
 
     def load_website

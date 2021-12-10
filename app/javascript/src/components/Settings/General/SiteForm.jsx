@@ -26,6 +26,11 @@ const SiteForm = ({
     setShowPassword(false);
   };
 
+  const handleCheckboxChange = e => {
+    setShowPassword(e.target.checked);
+    setPassword(null);
+  };
+
   const checkPasswordValid = passwordCandidate => {
     const passwordHasRequiredLength = passwordCandidate.length >= 6;
     const passwordFollowsFormat = regex.test(passwordCandidate);
@@ -34,7 +39,7 @@ const SiteForm = ({
     return passwordHasRequiredLength && passwordFollowsFormat;
   };
 
-  const handleChange = e => {
+  const handlePasswordChange = e => {
     const passwordCandidate = e.target.value;
     const followsPasswordFormat = checkPasswordValid(passwordCandidate);
     setIsValidPassword(followsPasswordFormat);
@@ -64,7 +69,7 @@ const SiteForm = ({
         <Checkbox
           label="Password Protect Knowledge Base"
           style={{ color: "#6366F1", cursor: "pointer", fontWeight: "bold" }}
-          onChange={e => setShowPassword(e.target.checked)}
+          onChange={handleCheckboxChange}
           checked={showPassword}
         />
         {/* <Typography style="h5" weight="semibold">
@@ -77,7 +82,7 @@ const SiteForm = ({
             label="Password"
             type="password"
             value={password ? password : ""}
-            onChange={handleChange}
+            onChange={handlePasswordChange}
           />
           {!isNil(password) && (
             <div className="my-1">

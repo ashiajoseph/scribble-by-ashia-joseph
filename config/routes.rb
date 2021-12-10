@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       end
     end
     resources :articles, except: %i[index new edit]
-    resources :websites, on;y: %i[show update]
+    resource :websites, only: %i[show update]
   end
 
   root "home#index"

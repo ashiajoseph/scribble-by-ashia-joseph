@@ -12,11 +12,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_09_065112) do
+ActiveRecord::Schema.define(version: 2021_12_10_094913) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
-    t.string "content", null: false
+    t.text "content", null: false
     t.string "status", null: false
     t.date "date", null: false
     t.integer "category_id"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 2021_12_09_065112) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "websites", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

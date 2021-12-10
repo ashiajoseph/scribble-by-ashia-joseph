@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Check, Close } from "@bigbinary/neeto-icons";
 import { Typography, Checkbox, Input, Button } from "@bigbinary/neetoui/v2";
@@ -13,6 +13,7 @@ const SiteForm = ({
   setIsValidPassword,
   showPassword,
   setShowPassword,
+  defaultWebsiteInfo,
 }) => {
   const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9\S]+)$/;
 
@@ -20,22 +21,30 @@ const SiteForm = ({
     useState(false);
   const [passwordValidLength, setPasswordValidLength] = useState(0);
   const handleCancel = () => {
-    setSiteName("");
-    setPassword("");
+    setSiteName(defaultWebsiteInfo.name);
+    setPassword(defaultWebsiteInfo.password);
+    checkPasswordValid(defaultWebsiteInfo.password);
     setShowPassword(false);
+  };
+
+  const checkPasswordValid = passwordCandidate => {
+    const passwordHasRequiredLength = passwordCandidate.length >= 6;
+    const passwordFollowsFormat = regex.test(passwordCandidate);
+    setPasswordValidLength(passwordHasRequiredLength);
+    setPasswordHasDigitAndAlphabet(passwordFollowsFormat);
+    return passwordHasRequiredLength && passwordFollowsFormat;
   };
 
   const handleChange = e => {
     const passwordCandidate = e.target.value;
-    setPassword(passwordCandidate);
-    const passwordHasRequiredLength = passwordCandidate.length >= 6;
-    const passwordFollowsFormat = regex.test(passwordCandidate);
-    const followsPasswordFormat =
-      passwordHasRequiredLength && passwordFollowsFormat;
-    setPasswordValidLength(passwordHasRequiredLength);
-    setPasswordHasDigitAndAlphabet(passwordFollowsFormat);
+    const followsPasswordFormat = checkPasswordValid(passwordCandidate);
     setIsValidPassword(followsPasswordFormat);
+    setPassword(passwordCandidate);
   };
+
+  useEffect(() => {
+    checkPasswordValid(password);
+  }, []);
 
   return (
     <form>

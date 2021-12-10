@@ -11,6 +11,7 @@ import Container from "../../Common/Container";
 import MenuBar from "../MenuBar";
 
 const General = () => {
+  const [defaultWebsiteInfo, setDefaultWebsiteInfo] = useState({});
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
@@ -33,7 +34,15 @@ const General = () => {
 
   const fetchWebsiteDetails = async () => {
     try {
-      await websiteApi.show();
+      const response = await websiteApi.show();
+      const { website } = response.data;
+      setDefaultWebsiteInfo({
+        name: website.name,
+        password: website.password_digest,
+      });
+      setSiteName(website.name);
+      setPassword(website.password_digest);
+      logger.info(website);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -79,6 +88,7 @@ const General = () => {
             setIsValidPassword={setIsValidPassword}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
+            defaultWebsiteInfo={defaultWebsiteInfo}
           />
         </div>
       </div>

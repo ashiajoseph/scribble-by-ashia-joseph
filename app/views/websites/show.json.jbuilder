@@ -1,3 +1,3 @@
 json.website do
-  json.extract! @website, :name, :password_digest
+  json.extract! @website, :name
 end

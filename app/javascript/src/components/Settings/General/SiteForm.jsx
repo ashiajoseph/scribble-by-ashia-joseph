@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Check, Close } from "@bigbinary/neeto-icons";
 import { Typography, Checkbox, Input, Button } from "@bigbinary/neetoui/v2";
-import { isEmpty } from "ramda";
+import { isNil } from "ramda";
 
 const SiteForm = ({
   password,
@@ -21,9 +21,8 @@ const SiteForm = ({
     useState(false);
   const [passwordValidLength, setPasswordValidLength] = useState(0);
   const handleCancel = () => {
-    setSiteName(defaultWebsiteInfo.name);
-    setPassword(defaultWebsiteInfo.password);
-    checkPasswordValid(defaultWebsiteInfo.password);
+    setSiteName(defaultWebsiteInfo);
+    setPassword(null);
     setShowPassword(false);
   };
 
@@ -42,9 +41,7 @@ const SiteForm = ({
     setPassword(passwordCandidate);
   };
 
-  useEffect(() => {
-    checkPasswordValid(password);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <form>
@@ -79,10 +76,10 @@ const SiteForm = ({
           <Input
             label="Password"
             type="password"
-            value={password}
+            value={password ? password : ""}
             onChange={handleChange}
           />
-          {!isEmpty(password) && (
+          {!isNil(password) && (
             <div className="my-1">
               <div className="flex flex-row my-2">
                 {passwordValidLength ? (

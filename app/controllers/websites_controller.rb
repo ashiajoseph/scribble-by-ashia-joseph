@@ -6,7 +6,19 @@ class WebsitesController < ApplicationController
   def show
   end
 
+  def update
+    if @website.update(website_params)
+      render status: :ok, json: { notice: t("successfully_updated", entity: "Website") }
+    else
+      render status: :unprocessable_entity, json: { error: @website.errors.full_messages.to_sentence }
+    end
+  end
+
   private
+
+    def website_params
+      params.require(:website).permit(:name, :password_digest)
+    end
 
     def load_website
       @website = Website.first

@@ -11,14 +11,26 @@ import Container from "../../Common/Container";
 import MenuBar from "../MenuBar";
 
 const General = () => {
-  const [defaultWebsiteInfo, setDefaultWebsiteInfo] = useState({});
+  const [defaultWebsiteInfo, setDefaultWebsiteInfo] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [siteName, setSiteName] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    try {
+      websiteApi.update({
+        website: { name: siteName, password_digest: password },
+      });
+      setPassword(null);
+      setShowPassword(false);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleValidation = e => {
     e.preventDefault();
@@ -36,13 +48,8 @@ const General = () => {
     try {
       const response = await websiteApi.show();
       const { website } = response.data;
-      setDefaultWebsiteInfo({
-        name: website.name,
-        password: website.password_digest,
-      });
+      setDefaultWebsiteInfo(website.name);
       setSiteName(website.name);
-      setPassword(website.password_digest);
-      logger.info(website);
     } catch (error) {
       logger.error(error);
     } finally {

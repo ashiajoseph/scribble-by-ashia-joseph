@@ -16,10 +16,9 @@ const SiteForm = ({
 }) => {
   const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9\S]+)$/;
 
-  const [passwordValidLength, setPasswordValidLength] = useState(0);
   const [passwordHasDigitAndAlphabet, setPasswordHasDigitAndAlphabet] =
     useState(false);
-
+  const [passwordValidLength, setPasswordValidLength] = useState(0);
   const handleCancel = () => {
     setSiteName("");
     setPassword("");

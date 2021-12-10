@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Typography, Toastr } from "@bigbinary/neetoui/v2";
+import { PageLoader } from "@bigbinary/neetoui/v2";
+
+import websiteApi from "apis/website";
 
 import SiteForm from "./SiteForm";
 
@@ -8,10 +11,11 @@ import Container from "../../Common/Container";
 import MenuBar from "../MenuBar";
 
 const General = () => {
-  const [siteName, setSiteName] = useState("");
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [siteName, setSiteName] = useState("");
 
   const handleSubmit = () => {};
 
@@ -26,6 +30,29 @@ const General = () => {
       );
     } else handleSubmit();
   };
+
+  const fetchWebsiteDetails = async () => {
+    try {
+      await websiteApi.show();
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWebsiteDetails();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-10 mt-40">
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
     <Container>
       <div className="flex h-full">

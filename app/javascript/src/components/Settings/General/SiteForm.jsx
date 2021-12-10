@@ -14,7 +14,7 @@ const SiteForm = ({
   setIsValidPassword,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9\S]+)$/;
 
   const [passwordValidLength, setPasswordValidLength] = useState(0);
   const [passwordHasDigitAndAlphabet, setPasswordHasDigitAndAlphabet] =
@@ -46,7 +46,11 @@ const SiteForm = ({
         value={siteName}
         onChange={e => setSiteName(e.target.value)}
       />
-      <Typography style="h6" weight="normal" className="neeto-ui-text-gray-500">
+      <Typography
+        style="h6"
+        weight="normal"
+        className="neeto-ui-text-gray-500 mt-2"
+      >
         Customize the site name which is used to show the site name in
       </Typography>
       <Typography style="h6" weight="bold" className="neeto-ui-text-gray-500">

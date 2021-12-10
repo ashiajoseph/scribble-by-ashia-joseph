@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Typography } from "@bigbinary/neetoui/v2";
+import { Typography, Toastr } from "@bigbinary/neetoui/v2";
 
 import SiteForm from "./SiteForm";
 
@@ -8,6 +8,23 @@ import Container from "../../Common/Container";
 import MenuBar from "../MenuBar";
 
 const General = () => {
+  const [siteName, setSiteName] = useState("");
+  const [password, setPassword] = useState("");
+  const [isValidPassword, setIsValidPassword] = useState(false);
+
+  const handleSubmit = () => {};
+
+  const handleValidation = e => {
+    e.preventDefault();
+    const isValidSiteName = siteName.trim().length === 0;
+    if (isValidSiteName) {
+      Toastr.error(Error("Site Name can't be blank"));
+    } else if (!isValidPassword) {
+      Toastr.error(
+        Error("Invalid Password. Please follow the Password format.")
+      );
+    } else handleSubmit();
+  };
   return (
     <Container>
       <div className="flex h-full">
@@ -25,7 +42,14 @@ const General = () => {
           >
             Configure general attributes of scribble.
           </Typography>
-          <SiteForm />
+          <SiteForm
+            password={password}
+            setPassword={setPassword}
+            siteName={siteName}
+            setSiteName={setSiteName}
+            handleValidation={handleValidation}
+            setIsValidPassword={setIsValidPassword}
+          />
         </div>
       </div>
     </Container>

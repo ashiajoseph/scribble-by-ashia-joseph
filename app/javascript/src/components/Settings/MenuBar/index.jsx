@@ -4,15 +4,13 @@ import { Settings, Seo, Repeat } from "@bigbinary/neeto-icons";
 
 import MenuItem from "./MenuItem";
 
-const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
+const MenuBar = () => {
   return (
     <div className="flex flex-col w-1/4 px-5 pt-8 border-r-2 border-nav-menubar h-full">
       <MenuItem
         title="General"
         description="Page Title, Brand Name&Meta Description"
         link="/settings/general"
-        selectedSettingOption={selectedSettingOption}
-        setSelectedSettingOption={setSelectedSettingOption}
       >
         <Settings />
       </MenuItem>
@@ -20,8 +18,6 @@ const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
         title="Redirections"
         description="Create & configure redirection rules"
         link="/settings/redirection"
-        selectedSettingOption={selectedSettingOption}
-        setSelectedSettingOption={setSelectedSettingOption}
       >
         <Repeat />
       </MenuItem>
@@ -29,8 +25,6 @@ const MenuBar = ({ selectedSettingOption, setSelectedSettingOption }) => {
         title="Manage categories"
         description="Edit and Reorder KB Structure"
         link="/settings/categories"
-        selectedSettingOption={selectedSettingOption}
-        setSelectedSettingOption={setSelectedSettingOption}
       >
         <Seo />
       </MenuItem>

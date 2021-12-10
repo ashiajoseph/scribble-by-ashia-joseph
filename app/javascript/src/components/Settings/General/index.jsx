@@ -10,6 +10,7 @@ import MenuBar from "../MenuBar";
 const General = () => {
   const [siteName, setSiteName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
 
   const handleSubmit = () => {};
@@ -19,7 +20,7 @@ const General = () => {
     const isValidSiteName = siteName.trim().length === 0;
     if (isValidSiteName) {
       Toastr.error(Error("Site Name can't be blank"));
-    } else if (!isValidPassword) {
+    } else if (showPassword && !isValidPassword) {
       Toastr.error(
         Error("Invalid Password. Please follow the Password format.")
       );
@@ -49,6 +50,8 @@ const General = () => {
             setSiteName={setSiteName}
             handleValidation={handleValidation}
             setIsValidPassword={setIsValidPassword}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
           />
         </div>
       </div>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { Check, Close } from "@bigbinary/neeto-icons";
 import { Typography, Checkbox, Input, Button } from "@bigbinary/neetoui/v2";
-import Logger from "js-logger";
 import { isEmpty } from "ramda";
 
 const SiteForm = ({
@@ -12,8 +11,9 @@ const SiteForm = ({
   setSiteName,
   handleValidation,
   setIsValidPassword,
+  showPassword,
+  setShowPassword,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
   const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9\S]+)$/;
 
   const [passwordValidLength, setPasswordValidLength] = useState(0);
@@ -29,7 +29,6 @@ const SiteForm = ({
   const handleChange = e => {
     const passwordCandidate = e.target.value;
     setPassword(passwordCandidate);
-    Logger.info(passwordCandidate);
     const passwordHasRequiredLength = passwordCandidate.length >= 6;
     const passwordFollowsFormat = regex.test(passwordCandidate);
     const followsPasswordFormat =

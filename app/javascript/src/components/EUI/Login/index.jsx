@@ -3,16 +3,29 @@ import React, { useState, useEffect } from "react";
 import { PageLoader, Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import LoginImage from "images/login.svg";
 
+import sessionApi from "apis/session";
 import websiteApi from "apis/website";
 
 import NavBar from "../NavBar";
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [websiteName, setWebsiteName] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setButtonLoading(true);
+    try {
+      const response = await sessionApi.create({ login: { password } });
+      logger.info(response.data);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setButtonLoading(false);
+    }
+  };
 
   const fetchWebsiteInfo = async () => {
     try {
@@ -67,9 +80,9 @@ const Login = () => {
           label="Continue"
           style="primary"
           className="bg-indigo-500 mt-5"
+          loading={buttonLoading}
           onClick={handleSubmit}
         />
-        {password}
       </div>
     </>
   );

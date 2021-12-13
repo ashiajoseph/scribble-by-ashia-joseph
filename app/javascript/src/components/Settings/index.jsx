@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import ManageCategories from "./ManageCategories/index.jsx";
 import MenuBar from "./MenuBar/index.jsx";
@@ -6,19 +6,12 @@ import MenuBar from "./MenuBar/index.jsx";
 import Container from "../Common/Container";
 
 const Settings = () => {
-  const [selectedSettingOption, setSelectedSettingOption] = useState("");
-
   return (
     <Container>
       <div className="flex h-full">
-        <MenuBar
-          selectedSettingOption={selectedSettingOption}
-          setSelectedSettingOption={setSelectedSettingOption}
-        />
+        <MenuBar />
         <div className="w-45 mx-auto">
-          {selectedSettingOption === "Manage categories" && (
-            <ManageCategories />
-          )}
+          <ManageCategories />
         </div>
       </div>
     </Container>

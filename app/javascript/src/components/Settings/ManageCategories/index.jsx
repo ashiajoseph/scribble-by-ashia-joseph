@@ -6,6 +6,9 @@ import categoriesApi from "apis/categories";
 
 import CategoryList from "./CategoryList";
 
+import Container from "../../Common/Container";
+import MenuBar from "../MenuBar";
+
 const ManageCategories = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [category, setCategory] = useState("");
@@ -74,30 +77,35 @@ const ManageCategories = () => {
   }
 
   return (
-    <div className="mt-12 mb-6">
-      <Typography
-        style="h3"
-        className="neeto-ui-text-gray-800 font-semibold mb-1"
-      >
-        Manage Categories
-      </Typography>
-      <Typography
-        style="h4"
-        className="neeto-ui-text-gray-600 font-normal mb-10"
-      >
-        Create and configure the categories inside your scribble.
-      </Typography>
-      <CategoryList
-        categoryList={categoryList}
-        fetchCategoryList={fetchCategoryList}
-        category={category}
-        setCategory={setCategory}
-        showCategoryInput={showCategoryInput}
-        setShowCategoryInput={setShowCategoryInput}
-        handleValidation={handleValidation}
-        handleDrop={handleDrop}
-      />
-    </div>
+    <Container>
+      <div className="flex h-full">
+        <MenuBar />
+        <div className="w-45 mx-auto mt-12 mb-6">
+          <Typography
+            style="h3"
+            className="neeto-ui-text-gray-800 font-semibold mb-1"
+          >
+            Manage Categories
+          </Typography>
+          <Typography
+            style="h4"
+            className="neeto-ui-text-gray-600 font-normal mb-10"
+          >
+            Create and configure the categories inside your scribble.
+          </Typography>
+          <CategoryList
+            categoryList={categoryList}
+            fetchCategoryList={fetchCategoryList}
+            category={category}
+            setCategory={setCategory}
+            showCategoryInput={showCategoryInput}
+            setShowCategoryInput={setShowCategoryInput}
+            handleValidation={handleValidation}
+            handleDrop={handleDrop}
+          />
+        </div>
+      </div>
+    </Container>
   );
 };
 

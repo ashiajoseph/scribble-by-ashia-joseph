@@ -90,7 +90,10 @@ const Menu = ({
   const showCategoryInput = addCategory
     ? {
         icon: Close,
-        onClick: () => setAddCategory(!addCategory),
+        onClick: () => {
+          setAddCategory(!addCategory);
+          setCategory("");
+        },
       }
     : {
         icon: Plus,

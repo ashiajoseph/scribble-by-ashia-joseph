@@ -18,9 +18,9 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_article_name_should_not_exceed_maximum_length
-    @article.title = "a" * 126
+    @article.title = "a" * 256
     assert_not @article.valid?
-    assert_includes @article.errors.full_messages, "Title is too long (maximum is 125 characters)"
+    assert_includes @article.errors.full_messages, "Title is too long (maximum is 255 characters)"
   end
 
   def test_article_should_not_be_valid_without_content

@@ -2,5 +2,5 @@
 
 class Website < ApplicationRecord
   has_secure_password :password, validations: false
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: Constants::MAX_NAME_LENGTH }
 end

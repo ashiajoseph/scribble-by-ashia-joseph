@@ -19,10 +19,11 @@ const Login = () => {
     setButtonLoading(true);
     try {
       const response = await sessionApi.create({ login: { password } });
-      logger.info(response.data);
+      const { authentication_token } = response.data;
+      sessionStorage.setItem("authToken", authentication_token);
+      setButtonLoading(false);
     } catch (error) {
       logger.error(error);
-    } finally {
       setButtonLoading(false);
     }
   };

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     end
     resources :articles, except: %i[index new edit]
     resource :website, only: %i[show update]
+    resource :session, only: :create
+
   end
 
   root "home#index"

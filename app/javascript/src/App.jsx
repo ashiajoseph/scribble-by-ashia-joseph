@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
+import Login from "components/EUI/Login";
 import CreateArticle from "components/Landing/Articles/CreateArticle";
 import EditArticle from "components/Landing/Articles/EditArticle";
 import General from "components/Settings/General";
@@ -34,6 +35,7 @@ const App = () => {
         <Route exact path="/settings/general" component={General} />
         <Route exact path="/articles/new" component={CreateArticle} />
         <Route exact path="/articles/:articleId/edit" component={EditArticle} />
+        <Route exact path="/public/login" component={Login} />
       </Switch>
     </Router>
   );

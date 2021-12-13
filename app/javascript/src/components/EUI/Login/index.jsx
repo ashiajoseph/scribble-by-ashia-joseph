@@ -9,8 +9,10 @@ import NavBar from "../NavBar";
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
-  //const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
   const [websiteName, setWebsiteName] = useState("");
+
+  const handleSubmit = () => {};
 
   const fetchWebsiteInfo = async () => {
     try {
@@ -55,13 +57,19 @@ const Login = () => {
         >
           Enter the password to gain access to {websiteName}.
         </Typography>
-        <Input label="Password" type="password" />
+        <Input
+          label="Password"
+          type="password"
+          onChange={e => setPassword(e.target.value)}
+        />
         <Button
           type="submit"
           label="Continue"
           style="primary"
           className="bg-indigo-500 mt-5"
+          onClick={handleSubmit}
         />
+        {password}
       </div>
     </>
   );

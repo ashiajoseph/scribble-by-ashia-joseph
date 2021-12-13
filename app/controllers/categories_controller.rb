@@ -37,7 +37,7 @@ class CategoriesController < ApplicationController
   end
 
   def retrieve_category_and_article_list
-    @category_list = Category.includes(:articles).order("position ASC")
+    @article_list = Article.includes(:category)
   end
 
   def update

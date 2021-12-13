@@ -34,8 +34,7 @@ const Dashboard = () => {
         total_draft_count,
         total_published_count,
         category_list,
-        article_list_with_categories,
-        article_list_without_categories,
+        article_list,
       } = response.data;
       setFilteredArticlesCount(total_draft_count + total_published_count);
 
@@ -46,12 +45,7 @@ const Dashboard = () => {
         published: total_published_count,
       });
       setCategoryList(category_list);
-      setArticleList(
-        [
-          ...article_list_with_categories,
-          article_list_without_categories,
-        ].flat()
-      );
+      setArticleList(article_list);
     } catch (error) {
       logger.error(error);
     } finally {

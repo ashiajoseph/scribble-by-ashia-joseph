@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { PageLoader, Typography } from "@bigbinary/neetoui/v2";
+import { PageLoader, Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import LoginImage from "images/login.svg";
 
 import websiteApi from "apis/website";
@@ -9,7 +9,9 @@ import NavBar from "../NavBar";
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
+  //const [password, setPassword] = useState("")
   const [websiteName, setWebsiteName] = useState("");
+
   const fetchWebsiteInfo = async () => {
     try {
       const response = await websiteApi.show();
@@ -37,8 +39,8 @@ const Login = () => {
   return (
     <>
       <NavBar name={websiteName} />
-      <div className="w-28 mx-auto">
-        <div>
+      <div className="w-1/4 mx-auto mt-32">
+        <div className="mb-6">
           <img src={LoginImage} className="mx-auto" />
         </div>
         <Typography
@@ -49,10 +51,17 @@ const Login = () => {
         </Typography>
         <Typography
           style="h4"
-          className="neeto-ui-text-gray-600 font-normal mb-10"
+          className="neeto-ui-text-gray-600 font-normal mb-6"
         >
           Enter the password to gain access to {websiteName}.
         </Typography>
+        <Input label="Password" type="password" />
+        <Button
+          type="submit"
+          label="Continue"
+          style="primary"
+          className="bg-indigo-500 mt-5"
+        />
       </div>
     </>
   );

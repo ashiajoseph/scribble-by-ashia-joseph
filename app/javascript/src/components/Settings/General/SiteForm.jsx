@@ -68,13 +68,10 @@ const SiteForm = ({
       <div className="flex flex-row flex-start border-t-2 border-nav-menubar border-solid my-4 pt-4 ">
         <Checkbox
           label="Password Protect Knowledge Base"
-          style={{ color: "#6366F1", cursor: "pointer", fontWeight: "bold" }}
+          style={{ color: "#6366F1", cursor: "pointer" }}
           onChange={handleCheckboxChange}
           checked={showPassword}
         />
-        {/* <Typography style="h5" weight="semibold">
-          Password Protect Knowledge Base
-        </Typography> */}
       </div>
       {showPassword && (
         <div className="w-7/12">

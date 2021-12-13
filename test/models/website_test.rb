@@ -27,4 +27,10 @@ class WebsiteTest < ActiveSupport::TestCase
     @website.password = nil
     assert @website.valid?
   end
+
+  def test_password_should_have_minimum_length
+    @website.password = "welco"
+    assert_not @website.valid?
+    assert_includes @website.errors.full_messages, "Password is too short (minimum is 6 characters)"
+  end
 end

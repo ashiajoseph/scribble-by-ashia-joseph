@@ -16,4 +16,3 @@ json.article_list @article_list do |article|
   json.author "Oliver Smith"
   json.category article.category ? article.category.name : "-"
 end
-

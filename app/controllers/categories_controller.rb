@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category, except: %i[index create  retrieve_category_and_article_list]
+  before_action :load_category,
+    except: %i[index create  retrieve_category_and_article_list retrieve_published_article_list]
 
   def index
     @category_list = Category.order("position ASC")
@@ -46,6 +47,10 @@ class CategoriesController < ApplicationController
     else
       render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
     end
+  end
+
+  def retrieve_published_article_list
+    @category_list = Category.includes(:articles).where(articles: { status: "published" })
   end
 
   private

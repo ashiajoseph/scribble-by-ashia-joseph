@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category,
-    except: %i[index create  retrieve_category_and_article_list retrieve_published_article_list]
+  before_action :load_category, only: %i[update destroy reorder_position]
 
   def index
     @category_list = Category.order("position ASC")

@@ -30,7 +30,7 @@ const Category = ({ category }) => {
       </div>
       {displayArticles &&
         category.article_list.map((article, index) => (
-          <Article key={index} data={article} />
+          <Article key={index} data={article} category={category.name} />
         ))}
     </div>
   );

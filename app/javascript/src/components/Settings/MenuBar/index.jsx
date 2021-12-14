@@ -17,7 +17,7 @@ const MenuBar = () => {
       <MenuItem
         title="Redirections"
         description="Create & configure redirection rules"
-        link="/settings/redirection"
+        link="/settings/redirections"
       >
         <Repeat />
       </MenuItem>

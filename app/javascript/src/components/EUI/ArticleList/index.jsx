@@ -18,21 +18,21 @@ const ArticleList = ({ history }) => {
   const [categoryDetails, setCategoryDetails] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState({});
   const [selectedCatgeory, setSelectedCategory] = useState();
-  const { id } = useParams();
+  const { slug } = useParams();
   const { websiteName } = useContext(websiteContext);
   const fetchPublishedList = async () => {
     try {
       const response = await categoriesApi.retrieve_published_article_list();
       const { list } = response.data;
       setCategoryDetails(list);
-      const urlId = id ? id : list[0].article_list[0].id;
+      const urlId = slug ? slug : list[0].article_list[0].slug;
       const filteredArticle = list
         .map(({ article_list }) => article_list)
         .flat()
-        .filter(({ id }) => id === Number(urlId));
+        .filter(({ slug }) => slug === urlId);
 
       setSelectedArticle({
-        id: filteredArticle[0].id,
+        slug: filteredArticle[0].slug,
         category: filteredArticle[0].category,
         title: filteredArticle[0].title,
         content: filteredArticle[0].content,

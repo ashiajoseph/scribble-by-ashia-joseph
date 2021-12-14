@@ -73,7 +73,7 @@ const PrivateRoute = () => {
     <websiteContext.Provider value={{ websiteName }}>
       <Switch>
         <Route exact path="/public/articles" component={ArticleList} />
-        <Route exact path="/public/articles/:id" component={ArticleList} />
+        <Route exact path="/public/articles/:slug" component={ArticleList} />
       </Switch>
     </websiteContext.Provider>
   );

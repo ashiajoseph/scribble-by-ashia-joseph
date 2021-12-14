@@ -10,16 +10,16 @@ const Article = ({ data }) => {
   const history = useHistory();
   const handleClick = () => {
     setSelectedArticle({
-      id: data.id,
+      slug: data.slug,
       category: data.category,
       title: data.title,
       content: data.content,
       date: data.date,
     });
-    history.push(`/public/articles/${data.id}`);
+    history.push(`/public/articles/${data.slug}`);
   };
   const textColor =
-    selectedArticle.id === data.id ? "text-indigo-500" : " text-gray-500 ";
+    selectedArticle.slug === data.slug ? "text-indigo-500" : " text-gray-500 ";
   return (
     <div className="ml-8 cursor-pointer" onClick={handleClick}>
       <Typography

@@ -11,7 +11,6 @@ import NavBar from "../NavBar";
 
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
-
   const [password, setPassword] = useState("");
   const { websiteName } = useContext(websiteContext);
 

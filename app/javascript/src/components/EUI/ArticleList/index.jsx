@@ -17,7 +17,7 @@ const ArticleList = ({ history }) => {
   const [loading, setLoading] = useState(true);
   const [categoryDetails, setCategoryDetails] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState({});
-  const [selectedCatgeory, setSelectedCategory] = useState();
+  const [selectedCatgeory, setSelectedCategory] = useState(0);
   const { slug } = useParams();
   const { websiteName } = useContext(websiteContext);
   const fetchPublishedList = async () => {
@@ -26,11 +26,11 @@ const ArticleList = ({ history }) => {
       const { list } = response.data;
       setCategoryDetails(list);
       const urlId = slug ? slug : list[0].article_list[0].slug;
+
       const filteredArticle = list
         .map(({ article_list }) => article_list)
         .flat()
         .filter(({ slug }) => slug === urlId);
-
       setSelectedArticle({
         slug: filteredArticle[0].slug,
         category: filteredArticle[0].category,
@@ -39,7 +39,6 @@ const ArticleList = ({ history }) => {
         date: filteredArticle[0].date,
       });
       setSelectedCategory(filteredArticle[0].category_id);
-
       history.push(`/public/articles/${urlId}`);
     } catch (error) {
       logger.error(error);

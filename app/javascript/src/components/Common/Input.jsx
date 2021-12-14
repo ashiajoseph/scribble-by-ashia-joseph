@@ -5,7 +5,7 @@ import { Input } from "@bigbinary/neetoui/v2";
 
 const FormInput = ({
   value = "",
-  setValue,
+  setValue = () => {},
   handleSubmit = () => {},
   width = "",
   type = "text",

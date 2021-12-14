@@ -18,9 +18,10 @@ const General = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [siteName, setSiteName] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setLoading(true);
     try {
-      websiteApi.update({
+      await websiteApi.update({
         website: { name: siteName, password: password },
       });
       setPassword(null);

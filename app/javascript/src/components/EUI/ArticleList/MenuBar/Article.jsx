@@ -19,7 +19,7 @@ const Article = ({ data }) => {
     history.push(`/public/articles/${data.slug}`);
   };
   const textColor =
-    selectedArticle.slug === data.slug ? "text-indigo-500" : " text-gray-500 ";
+    selectedArticle.slug === data.slug ? "text-indigo-500" : "text-gray-500";
   return (
     <div className="ml-8 cursor-pointer" onClick={handleClick}>
       <Typography

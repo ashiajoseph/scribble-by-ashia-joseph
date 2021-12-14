@@ -84,8 +84,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal response.parsed_body["category_list"].size, Category.all.size
     total_articles_without_categories = Article.where.missing(:category).size
-    total_articles_with_categories = Article.all.size - total_articles_without_categories
-    articles_with_category_list = response.parsed_body["article_list_with_categories"].flatten
-    assert_equal articles_with_category_list.size, total_articles_with_categories
+    assert_equal response.parsed_body["article_list"].size, Article.all.size
   end
 end

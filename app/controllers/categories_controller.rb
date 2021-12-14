@@ -38,6 +38,7 @@ class CategoriesController < ApplicationController
   end
 
   def retrieve_category_and_article_list
+    @category_list = Category.order("position ASC")
     @article_list = Article.includes(:category)
   end
 
@@ -50,7 +51,7 @@ class CategoriesController < ApplicationController
   end
 
   def retrieve_published_article_list
-    @category_list = Category.includes(:articles).where(articles: { status: "published" })
+    @category_list = Category.includes(:articles).where(articles: { status: "published" }).order("position ASC")
   end
 
   private

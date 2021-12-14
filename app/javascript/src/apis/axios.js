@@ -28,7 +28,7 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
-    setTimeout(() => (window.location.href = "/"), 3000);
+    setTimeout(() => (window.location.href = "/public/login"), 3000);
   }
   Toastr.error(
     Error(axiosErrorObject.response?.data?.error || DEFAULT_ERROR_NOTIFICATION)

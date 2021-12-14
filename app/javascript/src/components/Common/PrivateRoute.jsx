@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
 import { either, isEmpty, isNil } from "ramda";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route, useLocation, Switch } from "react-router-dom";
 
 import websiteApi from "apis/website";
 import ArticleList from "components/EUI/ArticleList";
@@ -46,7 +46,11 @@ const PrivateRoute = () => {
     );
   }
 
-  if (passwordPresent && !isLoggedIn && currentPath === "/public/articles") {
+  if (
+    passwordPresent &&
+    !isLoggedIn &&
+    currentPath.includes("/public/articles")
+  ) {
     return <Redirect to="/public/login" />;
   }
 
@@ -67,7 +71,10 @@ const PrivateRoute = () => {
 
   return (
     <websiteContext.Provider value={{ websiteName }}>
-      <Route path="/public/articles" component={ArticleList} />
+      <Switch>
+        <Route exact path="/public/articles" component={ArticleList} />
+        <Route exact path="/public/articles/:id" component={ArticleList} />
+      </Switch>
     </websiteContext.Provider>
   );
 };

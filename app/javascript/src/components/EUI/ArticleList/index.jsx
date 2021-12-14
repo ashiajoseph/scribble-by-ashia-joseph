@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
+import { useParams } from "react-router-dom";
 
 import categoriesApi from "apis/categories";
 
@@ -12,23 +13,34 @@ import NavBar from "../NavBar";
 
 const articleContext = createContext();
 
-const ArticleList = () => {
+const ArticleList = ({ history }) => {
   const [loading, setLoading] = useState(true);
   const [categoryDetails, setCategoryDetails] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState({});
+  const [selectedCatgeory, setSelectedCategory] = useState();
+  const { id } = useParams();
   const { websiteName } = useContext(websiteContext);
   const fetchPublishedList = async () => {
     try {
       const response = await categoriesApi.retrieve_published_article_list();
       const { list } = response.data;
       setCategoryDetails(list);
+      const urlId = id ? id : list[0].article_list[0].id;
+      const filteredArticle = list
+        .map(({ article_list }) => article_list)
+        .flat()
+        .filter(({ id }) => id === Number(urlId));
+
       setSelectedArticle({
-        id: list[0].article_list[0].id,
-        category: list[0].name,
-        title: list[0].article_list[0].title,
-        content: list[0].article_list[0].content,
-        date: list[0].article_list[0].date,
+        id: filteredArticle[0].id,
+        category: filteredArticle[0].category,
+        title: filteredArticle[0].title,
+        content: filteredArticle[0].content,
+        date: filteredArticle[0].date,
       });
+      setSelectedCategory(filteredArticle[0].category_id);
+
+      history.push(`/public/articles/${urlId}`);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -49,7 +61,9 @@ const ArticleList = () => {
   }
 
   return (
-    <articleContext.Provider value={{ selectedArticle, setSelectedArticle }}>
+    <articleContext.Provider
+      value={{ selectedArticle, setSelectedArticle, selectedCatgeory }}
+    >
       <div className="h-screen">
         <NavBar name={websiteName} />
         <div className="flex h-full">

@@ -1,19 +1,22 @@
 import React, { useContext } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
+import { useHistory } from "react-router-dom";
 
 import { articleContext } from "..";
 
-const Article = ({ data, category }) => {
+const Article = ({ data }) => {
   const { selectedArticle, setSelectedArticle } = useContext(articleContext);
+  const history = useHistory();
   const handleClick = () => {
     setSelectedArticle({
       id: data.id,
-      category,
+      category: data.category,
       title: data.title,
       content: data.content,
       date: data.date,
     });
+    history.push(`/public/articles/${data.id}`);
   };
   const textColor =
     selectedArticle.id === data.id ? "text-indigo-500" : " text-gray-500 ";

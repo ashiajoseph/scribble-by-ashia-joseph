@@ -171,6 +171,7 @@ const Menu = ({
             label={category.name}
             count={category.draft + category.published}
             active={selectedCategory === category.name}
+            className="break-all"
             onClick={() =>
               handleCategoryClick(
                 category.name,

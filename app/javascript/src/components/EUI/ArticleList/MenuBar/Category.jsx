@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
 
+import Article from "./Article";
+
 const Category = ({ category }) => {
   const [displayArticles, setDisplayArticles] = useState(false);
 
@@ -9,8 +11,11 @@ const Category = ({ category }) => {
     setDisplayArticles(prev => !prev);
   };
   return (
-    <div className="my-2 text-gray-600 p-1" onClick={handleClick}>
-      <div className="flex items-center cursor-pointer">
+    <div className="mt-1 text-gray-600 p-1">
+      <div
+        className="flex items-center cursor-pointer mb-2 break-all"
+        onClick={handleClick}
+      >
         {displayArticles ? (
           <i className="ri-arrow-down-s-line text-xl mr-2"></i>
         ) : (
@@ -20,7 +25,10 @@ const Category = ({ category }) => {
           {category.name}
         </Typography>
       </div>
-      {displayArticles && <div></div>}
+      {displayArticles &&
+        category.article_list.map((article, index) => (
+          <Article key={index} data={article} />
+        ))}
     </div>
   );
 };

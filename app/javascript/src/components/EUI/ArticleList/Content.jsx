@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
 
-const Content = ({ selectedArticle }) => {
+import { articleContext } from ".";
+
+const Content = () => {
+  const { selectedArticle } = useContext(articleContext);
+
   return (
     <div>
       <h1 className="text-5xl text-bold break-all">{selectedArticle.title}</h1>

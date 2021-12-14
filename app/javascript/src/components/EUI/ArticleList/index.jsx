@@ -55,7 +55,7 @@ const ArticleList = () => {
         <div className="flex h-full">
           <MenuBar data={categoryDetails} />
           <div className="w-68 mx-auto mt-10">
-            <Content selectedArticle={selectedArticle} />
+            <Content />
           </div>
         </div>
       </div>

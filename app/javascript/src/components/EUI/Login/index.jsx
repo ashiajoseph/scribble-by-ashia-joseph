@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
-import { PageLoader, Typography, Input, Button } from "@bigbinary/neetoui/v2";
+import { Typography, Button, Input } from "@bigbinary/neetoui/v2";
 import LoginImage from "images/login.svg";
 
 import sessionApi from "apis/session";
-import websiteApi from "apis/website";
 
+import { websiteContext } from "../../Common/PrivateRoute";
 import NavBar from "../NavBar";
 
-const Login = () => {
-  const [loading, setLoading] = useState(true);
-  const [buttonLoading, setButtonLoading] = useState(false);
-  const [password, setPassword] = useState("");
-  const [websiteName, setWebsiteName] = useState("");
+const Login = ({ history }) => {
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setButtonLoading(true);
+  const [password, setPassword] = useState("");
+  const { websiteName } = useContext(websiteContext);
+
+  const handleSubmit = async () => {
+    setLoading(true);
     try {
-      const response = await sessionApi.create({ login: { password } });
+      const response = await sessionApi.create({
+        login: { password: password },
+      });
       const { authentication_token } = response.data;
       sessionStorage.setItem("authToken", authentication_token);
-      setButtonLoading(false);
+      setLoading(false);
+      history.push("/public/articles");
     } catch (error) {
       logger.error(error);
-      setButtonLoading(false);
-    }
-  };
-
-  const fetchWebsiteInfo = async () => {
-    try {
-      const response = await websiteApi.show();
-      const { website } = response.data;
-      setWebsiteName(website.name);
-    } catch (error) {
-      logger.error(error);
-    } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchWebsiteInfo();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="py-10 mt-40">
-        <PageLoader />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -81,7 +59,7 @@ const Login = () => {
           label="Continue"
           style="primary"
           className="bg-indigo-500 mt-5"
-          loading={buttonLoading}
+          loading={loading}
           onClick={handleSubmit}
         />
       </div>

@@ -27,6 +27,7 @@ const General = () => {
       setShowPassword(false);
       setDefaultWebsiteInfo(siteName);
       setIsValidPassword(false);
+      sessionStorage.clear();
     } catch (error) {
       logger.error(error);
     } finally {

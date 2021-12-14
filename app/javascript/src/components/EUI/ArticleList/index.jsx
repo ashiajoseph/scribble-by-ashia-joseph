@@ -67,10 +67,17 @@ const ArticleList = ({ history }) => {
       <div className="h-screen">
         <NavBar name={websiteName} />
         <div className="flex h-full">
-          <MenuBar data={categoryDetails} />
-          <div className="w-68 mx-auto mt-10">
-            <Content />
-          </div>
+          {categoryDetails.length !== 0 && (
+            <>
+              <MenuBar data={categoryDetails} />
+              <div className="w-68 mx-auto mt-10">
+                <Content />
+              </div>
+            </>
+          )}
+          {categoryDetails.length === 0 && (
+            <div className="mx-auto mt-64 text-3xl">No Articles Published</div>
+          )}
         </div>
       </div>
     </articleContext.Provider>

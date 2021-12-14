@@ -4,7 +4,7 @@ import { PageLoader } from "@bigbinary/neetoui/v2";
 
 import categoriesApi from "apis/categories";
 
-import MenuBar from "./MenuBar";
+import MenuBar from "./MenuBar/index.jsx";
 
 import { websiteContext } from "../../Common/PrivateRoute";
 import NavBar from "../NavBar";

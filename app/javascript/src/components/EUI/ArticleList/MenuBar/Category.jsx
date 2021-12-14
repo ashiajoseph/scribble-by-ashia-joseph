@@ -21,7 +21,10 @@ const Category = ({ category }) => {
         ) : (
           <i className="ri-arrow-right-s-line text-xl mr-2"></i>
         )}
-        <Typography style="h4" className="font-semibold break-words">
+        <Typography
+          style="h4"
+          className="font-semibold break-words tracking-wide"
+        >
           {category.name}
         </Typography>
       </div>

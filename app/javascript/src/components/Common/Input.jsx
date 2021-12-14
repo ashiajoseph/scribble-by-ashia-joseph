@@ -3,11 +3,14 @@ import React, { useEffect, useRef } from "react";
 import { Check } from "@bigbinary/neeto-icons";
 import { Input } from "@bigbinary/neetoui/v2";
 
-const CategoryInput = ({
-  category = "",
-  setCategory,
-  handleSubmit,
+const FormInput = ({
+  value = "",
+  setValue,
+  handleSubmit = () => {},
   width = "",
+  type = "text",
+  check = true,
+  label = "",
 }) => {
   const inputRef = useRef();
   useEffect(() => {
@@ -16,18 +19,22 @@ const CategoryInput = ({
   return (
     <div className={width}>
       <Input
+        label={label}
+        type={type}
         suffix={
-          <button className="focus:outline-none" onClick={handleSubmit}>
-            <Check className="hover:neeto-ui-text-success" />
-          </button>
+          check && (
+            <button className="focus:outline-none" onClick={handleSubmit}>
+              <Check className="hover:neeto-ui-text-success" />
+            </button>
+          )
         }
-        onChange={e => setCategory(e.target.value)}
+        onChange={e => setValue(e.target.value)}
         className="focus:outline-none focus:shadow-outline-black"
-        value={category}
+        value={value}
         ref={inputRef}
       />
     </div>
   );
 };
 
-export default CategoryInput;
+export default FormInput;

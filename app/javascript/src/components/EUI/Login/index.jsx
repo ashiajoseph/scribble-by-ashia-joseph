@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 
-import { Typography, Button, Input } from "@bigbinary/neetoui/v2";
+import { Typography, Button } from "@bigbinary/neetoui/v2";
 import LoginImage from "images/login.svg";
 
 import sessionApi from "apis/session";
 
+import FormInput from "../../Common/Input";
 import { websiteContext } from "../../Common/PrivateRoute";
 import NavBar from "../NavBar";
 
@@ -49,10 +50,12 @@ const Login = ({ history }) => {
         >
           Enter the password to gain access to {websiteName}.
         </Typography>
-        <Input
+        <FormInput
           label="Password"
           type="password"
-          onChange={e => setPassword(e.target.value)}
+          check={false}
+          value={password}
+          setValue={setPassword}
         />
         <Button
           type="submit"

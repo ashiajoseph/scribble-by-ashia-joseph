@@ -9,6 +9,8 @@ const reorder_position = ({ id, payload }) =>
 
 const retrieve_category_and_article_list = () =>
   axios.get("/categories/retrieve_category_and_article_list");
+const retrieve_published_article_list = () =>
+  axios.get("/categories/retrieve_published_article_list");
 
 const update = ({ id, payload }) => axios.put(`/categories/${id}`, payload);
 
@@ -18,6 +20,7 @@ const categoriesApi = {
   list,
   reorder_position,
   retrieve_category_and_article_list,
+  retrieve_published_article_list,
   update,
 };
 export default categoriesApi;

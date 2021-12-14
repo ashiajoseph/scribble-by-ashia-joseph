@@ -83,9 +83,17 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get retrieve_category_and_article_list_categories_path
     assert_response :success
     assert_equal response.parsed_body["category_list"].size, Category.all.size
-    total_articles_without_categories = Article.where.missing(:category).size
-    total_articles_with_categories = Article.all.size - total_articles_without_categories
-    articles_with_category_list = response.parsed_body["article_list_with_categories"].flatten
-    assert_equal articles_with_category_list.size, total_articles_with_categories
+    assert_equal response.parsed_body["article_list"].size, Article.all.size
+  end
+
+  def test_published_article_list_retrieved
+    create_list(:article, 5, :draft)
+    create_list(:article, 5, :published)
+
+    get retrieve_published_article_list_categories_path
+    assert_response :success
+    assert_equal response.parsed_body["list"].size, 5
+    article_list = response.parsed_body["list"].map { |category|category["article_list"] }
+    assert_equal article_list.flatten(1).size, Article.published.size
   end
 end

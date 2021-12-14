@@ -6,7 +6,7 @@ import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
 import categoriesApi from "apis/categories";
 
-import CategoryInput from "../Settings/ManageCategories/Input";
+import FormInput from "../Common/Input";
 
 const Menu = ({
   categoryList,
@@ -153,9 +153,9 @@ const Menu = ({
         onChange={e => setSearchWord(e.target.value)}
       />
       {addCategory && (
-        <CategoryInput
-          category={category}
-          setCategory={setCategory}
+        <FormInput
+          value={category}
+          setValue={setCategory}
           handleSubmit={handleValidation}
         />
       )}
@@ -171,6 +171,7 @@ const Menu = ({
             label={category.name}
             count={category.draft + category.published}
             active={selectedCategory === category.name}
+            className="break-all"
             onClick={() =>
               handleCategoryClick(
                 category.name,

@@ -5,7 +5,7 @@ import { Toastr } from "@bigbinary/neetoui/v2";
 
 import categoriesApi from "apis/categories";
 
-import CategoryInput from "./Input";
+import FormInput from "../../Common/Input";
 
 const Category = ({ id, name, deleteCategory }) => {
   const [category, setCategory] = useState(name);
@@ -90,9 +90,9 @@ const Category = ({ id, name, deleteCategory }) => {
         </div>
       )}
       {showCategoryInput && (
-        <CategoryInput
-          category={category}
-          setCategory={setCategory}
+        <FormInput
+          value={category}
+          setValue={setCategory}
           handleSubmit={handleValidation}
           width="w-1/2"
         />

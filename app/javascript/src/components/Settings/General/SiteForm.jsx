@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Check, Close } from "@bigbinary/neeto-icons";
 import { Typography, Checkbox, Input, Button } from "@bigbinary/neetoui/v2";
 import { isNil } from "ramda";
+
+import FormInput from "../../Common/Input";
 
 const SiteForm = ({
   password,
@@ -46,14 +48,13 @@ const SiteForm = ({
     setPassword(passwordCandidate);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <form>
-      <Input
+      <FormInput
         label="Site Name"
+        check={false}
         value={siteName}
-        onChange={e => setSiteName(e.target.value)}
+        setValue={setSiteName}
       />
       <Typography
         style="h6"

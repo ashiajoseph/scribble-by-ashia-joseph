@@ -10,18 +10,9 @@ json.category_list @category_list do |category|
   json.published category.articles.published.size
 end
 
-json.article_list_with_categories @category_list do |category|
-  json.array! category.articles do |article|
-    json.extract! article, :id, :title, :content, :status, :category_id
-    json.date article.status === "published" ? article.date.strftime("%B %e, %Y") : "-"
-    json.author "Oliver Smith"
-    json.category article.category.name
-  end
-end
-
-json.article_list_without_categories Article.where.missing(:category) do |article|
+json.article_list @article_list do |article|
   json.extract! article, :id, :title, :content, :status, :category_id
   json.date article.status === "published" ? article.date.strftime("%B %e, %Y") : "-"
   json.author "Oliver Smith"
-  json.category "-"
+  json.category article.category ? article.category.name : "-"
 end

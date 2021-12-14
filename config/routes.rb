@@ -9,10 +9,12 @@ Rails.application.routes.draw do
       end
       collection do
         get "retrieve_category_and_article_list"
+        get "retrieve_published_article_list"
       end
     end
     resources :articles, except: %i[index new edit]
     resource :website, only: %i[show update]
+    resource :session, only: :create
   end
 
   root "home#index"

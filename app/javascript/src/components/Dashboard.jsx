@@ -34,8 +34,7 @@ const Dashboard = () => {
         total_draft_count,
         total_published_count,
         category_list,
-        article_list_with_categories,
-        article_list_without_categories,
+        article_list,
       } = response.data;
       setFilteredArticlesCount(total_draft_count + total_published_count);
 
@@ -46,12 +45,7 @@ const Dashboard = () => {
         published: total_published_count,
       });
       setCategoryList(category_list);
-      setArticleList(
-        [
-          ...article_list_with_categories,
-          article_list_without_categories,
-        ].flat()
-      );
+      setArticleList(article_list);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -129,16 +123,20 @@ const Dashboard = () => {
 
   const modifyCount = () => {
     const articleStatus = articleToBeDeleted.status;
-    const statusCount = displayedCount[articleStatus] - 1;
+    const otherStatus = articleStatus === "draft" ? "published" : "draft";
     const totalArticlesCountOfStatus =
       displayedCount[`total_${articleStatus}_count`] - 1;
-    setFilteredArticlesCount(prev => prev - 1);
-    setDisplayedCount(prev => {
-      return {
-        ...prev,
-        [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
-        [`${articleStatus}`]: statusCount,
-      };
+    const totalArticlesCountOfOtherStatus =
+      displayedCount[`total_${otherStatus}_count`];
+
+    const newCount =
+      totalArticlesCountOfStatus + totalArticlesCountOfOtherStatus;
+    setFilteredArticlesCount(newCount);
+    setDisplayedCount({
+      [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
+      [`${articleStatus}`]: totalArticlesCountOfStatus,
+      [`total_${otherStatus}_count`]: totalArticlesCountOfOtherStatus,
+      [`${otherStatus}`]: totalArticlesCountOfOtherStatus,
     });
   };
 

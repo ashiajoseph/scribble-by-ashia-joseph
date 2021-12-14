@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+import { PageLoader } from "@bigbinary/neetoui/v2";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
+import PrivateRoute from "components/Common/PrivateRoute";
 import Dashboard from "components/Dashboard";
 import CreateArticle from "components/Landing/Articles/CreateArticle";
 import EditArticle from "components/Landing/Articles/EditArticle";
@@ -22,7 +24,11 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="py-10 mt-40">
+        <PageLoader />
+      </div>
+    );
   }
 
   return (
@@ -34,6 +40,8 @@ const App = () => {
         <Route exact path="/settings/general" component={General} />
         <Route exact path="/articles/new" component={CreateArticle} />
         <Route exact path="/articles/:articleId/edit" component={EditArticle} />
+
+        <PrivateRoute />
       </Switch>
     </Router>
   );

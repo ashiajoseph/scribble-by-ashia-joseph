@@ -6,7 +6,8 @@ import Sortable from "sortablejs";
 import categoriesApi from "apis/categories";
 
 import Category from "./Category";
-import CategoryInput from "./Input";
+
+import FormInput from "../../Common/Input";
 
 const CategoryList = ({
   categoryList,
@@ -48,9 +49,9 @@ const CategoryList = ({
           </button>
         )}
         {showCategoryInput && (
-          <CategoryInput
-            category={category}
-            setCategory={setCategory}
+          <FormInput
+            value={category}
+            setValue={setCategory}
             handleSubmit={handleValidation}
             width="w-1/2"
           />

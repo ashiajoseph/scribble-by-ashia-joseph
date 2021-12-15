@@ -11,6 +11,8 @@ const FormInput = ({
   type = "text",
   check = true,
   label = "",
+  prefix = "",
+  style = {},
 }) => {
   const inputRef = useRef();
   useEffect(() => {
@@ -21,6 +23,7 @@ const FormInput = ({
       <Input
         label={label}
         type={type}
+        prefix={prefix}
         suffix={
           check && (
             <button className="focus:outline-none" onClick={handleSubmit}>
@@ -32,6 +35,7 @@ const FormInput = ({
         className="focus:outline-none focus:shadow-outline-black"
         value={value}
         ref={inputRef}
+        style={style}
       />
     </div>
   );

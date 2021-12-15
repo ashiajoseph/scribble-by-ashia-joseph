@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
+import NotFound from "components/Common/NotFound";
 import PrivateRoute from "components/Common/PrivateRoute";
 import Dashboard from "components/Dashboard";
 import CreateArticle from "components/Landing/Articles/CreateArticle";
@@ -78,8 +79,8 @@ const App = () => {
             path="/articles/:articleId/edit"
             component={EditArticle}
           />
-
-          <PrivateRoute />
+          <PrivateRoute path="/public" />
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
     </redirectionContext.Provider>

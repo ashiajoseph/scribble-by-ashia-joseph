@@ -63,13 +63,14 @@ const App = () => {
           {redirectionList.map(({ from, to }, index) => (
             <Redirect key={index} from={from} to={to} />
           ))}
+          <Redirect exact from="/settings" to="/settings/general" />
           <Route exact path="/" component={Dashboard} />
           <Route
             exact
             path="/settings/categories"
             component={ManageCategories}
           />
-          <Route exact path="/settings" component={General} />
+          <Route exact path="/settings/general" component={General} />
           <Route exact path="/settings/redirections" component={Redirections} />
           <Route exact path="/articles/new" component={CreateArticle} />
           <Route

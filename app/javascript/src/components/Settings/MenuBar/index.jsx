@@ -10,7 +10,7 @@ const MenuBar = () => {
       <MenuItem
         title="General"
         description="Page Title, Brand Name&Meta Description"
-        link="/settings"
+        link="/settings/general"
       >
         <Settings />
       </MenuItem>

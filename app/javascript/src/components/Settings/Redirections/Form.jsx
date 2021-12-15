@@ -4,9 +4,9 @@ import { Check } from "@bigbinary/neeto-icons";
 
 import FormInput from "../../Common/Input";
 
-const Form = ({ id, submitRedirection }) => {
-  const [fromPath, setFromPath] = useState("");
-  const [toPath, setToPath] = useState("");
+const Form = ({ id, submitRedirection, from = "", to = "" }) => {
+  const [fromPath, setFromPath] = useState(from);
+  const [toPath, setToPath] = useState(to);
   const origin = window.location.origin;
 
   const handleSubmit = e => {

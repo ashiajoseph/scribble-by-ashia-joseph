@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
-import { Button, PageLoader } from "@bigbinary/neetoui/v2";
+import { Button } from "@bigbinary/neetoui/v2";
 
 import redirectionsApi from "apis/redirections";
 
@@ -12,7 +12,6 @@ import { redirectionContext } from "../../../App";
 
 const RedirectionList = () => {
   const [createList, setCreateList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { redirectionList, setRedirectionList } =
     useContext(redirectionContext);
 
@@ -22,6 +21,10 @@ const RedirectionList = () => {
     try {
       redirectionRef.current.className = "hidden";
       await redirectionsApi.destroy(idToBeDeleted);
+      const filteredList = redirectionList.filter(
+        ({ id }) => id !== idToBeDeleted
+      );
+      setRedirectionList(filteredList);
     } catch (error) {
       logger.error(error);
     }
@@ -47,30 +50,6 @@ const RedirectionList = () => {
       logger.error(error);
     }
   };
-
-  const fetchRedirectionList = async () => {
-    try {
-      const response = await redirectionsApi.list();
-      const { redirection_list } = response.data;
-      setRedirectionList(redirection_list);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchRedirectionList();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="py-10 mt-40">
-        <PageLoader />
-      </div>
-    );
-  }
 
   return (
     <>

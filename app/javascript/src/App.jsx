@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <redirectionContext.Provider
-      value={{ redirectionList, setRedirectionList }}
+      value={{ redirectionList, setRedirectionList, fetchRedirectionList }}
     >
       <Router>
         <ToastContainer />

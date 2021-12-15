@@ -1,18 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+
+import redirectionsApi from "apis/redirections";
 
 import Form from "./Form";
 
+import { redirectionContext } from "../../../App";
+
 const Block = ({ id, from, to, deleteRedirection }) => {
+  const [loading, setLoading] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const { fetchRedirectionList } = useContext(redirectionContext);
   const origin = window.location.origin;
   const redirectionRef = useRef();
-  const [showEditForm, setShowEditForm] = useState(false);
-
   const handleDelete = () => {
     const toBeDeleted = window.confirm(
       `Are you sure you want to delete the redirection?`
     );
     if (toBeDeleted) deleteRedirection(id, redirectionRef);
   };
+
+  const handleEdit = async (fromPath, toPath) => {
+    setLoading(true);
+    try {
+      await redirectionsApi.update({
+        id: id,
+        payload: { from: fromPath, to: toPath },
+      });
+      fetchRedirectionList();
+      setShowEditForm(false);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white p-3 rounded-sm my-2 text-gray-400">
+        Editing ...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -41,7 +70,9 @@ const Block = ({ id, from, to, deleteRedirection }) => {
           </div>
         </div>
       )}
-      {showEditForm && <Form />}
+      {showEditForm && (
+        <Form from={from} to={to} submitRedirection={handleEdit} />
+      )}
     </>
   );
 };

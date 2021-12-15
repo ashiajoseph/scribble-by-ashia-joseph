@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   defaults format: :json do
-    resources :categories, except: %i[new edit]
+    resources :categories, except: %i[new edit show]
     resources :categories do
       member do
         put "reorder_position"

@@ -12,7 +12,7 @@ const Redirections = () => {
     <Container>
       <div className="flex h-full">
         <MenuBar />
-        <div className="w-1/2 mx-auto mt-10 mb-6">
+        <div className="w-52 mx-auto mt-10 mb-6">
           <Typography
             style="h2"
             className="neeto-ui-text-gray-800 font-semibold mb-1"

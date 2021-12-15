@@ -13,8 +13,10 @@ const RedirectionList = () => {
     count.current += 1;
   };
 
-  const submitRedirection = id => {
+  const submitRedirection = (fromPath, toPath, id) => {
+    fromPath, toPath;
     const filteredList = createList.filter(index => index !== id);
+    count.current = filteredList.length === 0 ? 0 : count.current;
     setCreateList(filteredList);
   };
 

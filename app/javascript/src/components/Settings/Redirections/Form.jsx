@@ -42,7 +42,7 @@ const Form = ({ id, submitRedirection }) => {
         type="submit"
       >
         <Check
-          className="neeto-ui-text-gray-600 mr-3 hover:neeto-ui-text-success"
+          className="neeto-ui-text-gray-600 mr-4 hover:neeto-ui-text-success"
           size={30}
         />
       </button>

@@ -38,7 +38,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/settings/categories" component={ManageCategories} />
-        <Route exact path="/settings/general" component={General} />
+        <Route exact path="/settings" component={General} />
         <Route exact path="/settings/redirections" component={Redirections} />
         <Route exact path="/articles/new" component={CreateArticle} />
         <Route exact path="/articles/:articleId/edit" component={EditArticle} />

@@ -2,8 +2,7 @@ import React from "react";
 
 import { ExternalLink } from "@bigbinary/neeto-icons";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
-import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 const NavBar = () => {
   const history = useHistory();
@@ -25,7 +24,7 @@ const NavBar = () => {
           Articles
         </NavLink>
         <NavLink
-          to="/settings/categories"
+          to="/settings"
           className={isActive =>
             (isActive ? "text-indigo-500" : "text-gray-400") + " ml-6"
           }

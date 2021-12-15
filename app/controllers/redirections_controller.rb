@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class RedirectionsController < ApplicationController
+  def index
+    @redirection_list = Redirection.all
+  end
+
   def create
     redirection = Redirection.new(redirection_params)
     if redirection.save

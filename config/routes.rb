@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :articles, except: %i[index new edit]
     resource :website, only: %i[show update]
     resource :session, only: :create
-    resources :redirections, only: %i[create]
+    resources :redirections, only: %i[create index]
   end
 
   root "home#index"

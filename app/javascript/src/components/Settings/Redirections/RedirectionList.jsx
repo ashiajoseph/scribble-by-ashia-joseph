@@ -3,6 +3,8 @@ import React, { useState, useRef } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import { Button } from "@bigbinary/neetoui/v2";
 
+import redirectionsApi from "apis/redirections";
+
 import Form from "./Form";
 
 const RedirectionList = () => {
@@ -13,11 +15,17 @@ const RedirectionList = () => {
     count.current += 1;
   };
 
-  const submitRedirection = (fromPath, toPath, id) => {
-    fromPath, toPath;
-    const filteredList = createList.filter(index => index !== id);
-    count.current = filteredList.length === 0 ? 0 : count.current;
-    setCreateList(filteredList);
+  const submitRedirection = async (fromPath, toPath, id) => {
+    try {
+      await redirectionsApi.create({
+        redirection: { from: fromPath, to: toPath },
+      });
+      const filteredList = createList.filter(index => index !== id);
+      count.current = filteredList.length === 0 ? 0 : count.current;
+      setCreateList(filteredList);
+    } catch (error) {
+      logger.error(error);
+    }
   };
 
   return (

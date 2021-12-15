@@ -12,7 +12,7 @@ const Redirections = () => {
     <Container>
       <div className="flex h-full">
         <MenuBar />
-        <div className="w-52 mx-auto mt-10 mb-6">
+        <div className="w-52 mx-auto mt-10 mb-8">
           <Typography
             style="h2"
             className="neeto-ui-text-gray-800 font-semibold mb-1"
@@ -21,13 +21,13 @@ const Redirections = () => {
           </Typography>
           <Typography
             style="h4"
-            className="neeto-ui-text-gray-600 font-normal mb-8 tracking-wide"
+            className="neeto-ui-text-gray-600 font-normal mb-8 "
           >
             Create and configure redirection rules to send users from old links
             to new links. All redirections are performed with 301 status codes
             to be SEO friendly.
           </Typography>
-          <div className="py-10 px-8 bg-indigo-50">
+          <div className="py-10 px-6 bg-indigo-50">
             <div className="flex flex-row items-center justify-around mb-3">
               <Typography
                 style="h6"

@@ -21,7 +21,7 @@ const Form = ({ id, submitRedirection }) => {
       onSubmit={handleSubmit}
     >
       <FormInput
-        width="w-38 px-0"
+        width="w-38"
         check={false}
         prefix={origin}
         value={fromPath}

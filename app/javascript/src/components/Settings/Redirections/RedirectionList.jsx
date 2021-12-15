@@ -1,14 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
-import { Button } from "@bigbinary/neetoui/v2";
+import { Button, PageLoader } from "@bigbinary/neetoui/v2";
 
 import redirectionsApi from "apis/redirections";
 
+import Block from "./Block";
 import Form from "./Form";
 
 const RedirectionList = () => {
   const [createList, setCreateList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [redirectionList, setRedirectionList] = useState([]);
+
   const count = useRef(0);
   const handleClick = () => {
     setCreateList(prev => [...prev, count.current]);
@@ -28,8 +32,37 @@ const RedirectionList = () => {
     }
   };
 
+  const fetchRedirectionList = async () => {
+    try {
+      const response = await redirectionsApi.list();
+      const { redirection_list } = response.data;
+      setRedirectionList(redirection_list);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRedirectionList();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-10 mt-40">
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
     <>
+      <div>
+        {redirectionList.map((redirection, index) => (
+          <Block key={index} {...redirection} />
+        ))}
+      </div>
       <div>
         {createList.map(index => (
           <Form key={index} id={index} submitRedirection={submitRedirection} />

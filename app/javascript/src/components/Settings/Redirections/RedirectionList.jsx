@@ -14,6 +14,16 @@ const RedirectionList = () => {
   const [redirectionList, setRedirectionList] = useState([]);
 
   const count = useRef(0);
+
+  const deleteRedirection = async (idToBeDeleted, redirectionRef) => {
+    try {
+      redirectionRef.current.className = "hidden";
+      await redirectionsApi.destroy(idToBeDeleted);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   const handleClick = () => {
     setCreateList(prev => [...prev, count.current]);
     count.current += 1;
@@ -60,7 +70,11 @@ const RedirectionList = () => {
     <>
       <div>
         {redirectionList.map((redirection, index) => (
-          <Block key={index} {...redirection} />
+          <Block
+            key={index}
+            deleteRedirection={deleteRedirection}
+            {...redirection}
+          />
         ))}
       </div>
       <div>

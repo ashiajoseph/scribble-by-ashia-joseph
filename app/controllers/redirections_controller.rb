@@ -11,7 +11,8 @@ class RedirectionsController < ApplicationController
     redirection = Redirection.new(redirection_params)
     if redirection.save
       render status: :ok, json: {
-        notice: t("successfully_created", entity: "Redirection")
+        notice: t("successfully_created", entity: "Redirection"),
+        new_redirection: { id: redirection.id, from: redirection.from, to: redirection.to }
       }
     else
       error = redirection.errors.full_messages.to_sentence

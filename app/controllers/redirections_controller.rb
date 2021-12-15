@@ -28,6 +28,14 @@ class RedirectionsController < ApplicationController
     end
   end
 
+  def update
+    if @redirection.update(redirection_params)
+      render status: :ok, json: { notice: t("successfully_updated", entity: "Redirection") }
+    else
+      render status: :unprocessable_entity, json: { error: @redirection.errors.full_messages.to_sentence }
+    end
+  end
+
   private
 
     def redirection_params

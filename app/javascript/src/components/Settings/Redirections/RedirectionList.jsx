@@ -31,12 +31,15 @@ const RedirectionList = () => {
 
   const submitRedirection = async (fromPath, toPath, id) => {
     try {
-      await redirectionsApi.create({
+      const response = await redirectionsApi.create({
         redirection: { from: fromPath, to: toPath },
       });
+      const { new_redirection } = response.data;
+
       const filteredList = createList.filter(index => index !== id);
       count.current = filteredList.length === 0 ? 0 : count.current;
       setCreateList(filteredList);
+      setRedirectionList(prev => [...prev, new_redirection]);
     } catch (error) {
       logger.error(error);
     }

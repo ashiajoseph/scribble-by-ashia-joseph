@@ -11,7 +11,14 @@ const Block = ({ from, to }) => {
       <div className="w-38">
         <span className="neeto-ui-text-gray-700">{origin + to}</span>
       </div>
-      <div className="w-1/6"></div>
+      <div className="w-1/6 flex flex-row justify-evenly">
+        <button className="focus:outline-none" onClick={() => {}}>
+          <i className="ri-delete-bin-line neeto-ui-text-gray-600 mr-3 hover:text-red-600 text-md"></i>
+        </button>
+        <button className="focus:outline-none" onClick={() => {}}>
+          <i className="ri-pencil-line neeto-ui-text-gray-600 hover:text-black  text-md"></i>
+        </button>
+      </div>
     </div>
   );
 };

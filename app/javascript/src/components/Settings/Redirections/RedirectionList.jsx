@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
 import { Button, PageLoader } from "@bigbinary/neetoui/v2";
@@ -8,10 +8,13 @@ import redirectionsApi from "apis/redirections";
 import Block from "./Block";
 import Form from "./Form";
 
+import { redirectionContext } from "../../../App";
+
 const RedirectionList = () => {
   const [createList, setCreateList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [redirectionList, setRedirectionList] = useState([]);
+  const { redirectionList, setRedirectionList } =
+    useContext(redirectionContext);
 
   const count = useRef(0);
 

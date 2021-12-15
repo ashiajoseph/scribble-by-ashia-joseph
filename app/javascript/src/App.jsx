@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
 import {
@@ -19,6 +19,8 @@ import EditArticle from "components/Landing/Articles/EditArticle";
 import General from "components/Settings/General";
 import ManageCategories from "components/Settings/ManageCategories";
 import Redirections from "components/Settings/Redirections";
+
+const redirectionContext = createContext();
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -52,23 +54,36 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <ToastContainer />
-      <Switch>
-        {redirectionList.map(({ from, to }, index) => (
-          <Redirect key={index} from={from} to={to} />
-        ))}
-        <Route exact path="/" component={Dashboard} />
-        <Route exact path="/settings/categories" component={ManageCategories} />
-        <Route exact path="/settings" component={General} />
-        <Route exact path="/settings/redirections" component={Redirections} />
-        <Route exact path="/articles/new" component={CreateArticle} />
-        <Route exact path="/articles/:articleId/edit" component={EditArticle} />
+    <redirectionContext.Provider
+      value={{ redirectionList, setRedirectionList }}
+    >
+      <Router>
+        <ToastContainer />
+        <Switch>
+          {redirectionList.map(({ from, to }, index) => (
+            <Redirect key={index} from={from} to={to} />
+          ))}
+          <Route exact path="/" component={Dashboard} />
+          <Route
+            exact
+            path="/settings/categories"
+            component={ManageCategories}
+          />
+          <Route exact path="/settings" component={General} />
+          <Route exact path="/settings/redirections" component={Redirections} />
+          <Route exact path="/articles/new" component={CreateArticle} />
+          <Route
+            exact
+            path="/articles/:articleId/edit"
+            component={EditArticle}
+          />
 
-        <PrivateRoute />
-      </Switch>
-    </Router>
+          <PrivateRoute />
+        </Switch>
+      </Router>
+    </redirectionContext.Provider>
   );
 };
 
 export default App;
+export { redirectionContext };

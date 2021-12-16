@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 import redirectionsApi from "apis/redirections";
 
@@ -11,12 +11,12 @@ const Block = ({ id, from, to, deleteRedirection }) => {
   const [showEditForm, setShowEditForm] = useState(false);
   const { fetchRedirectionList } = useContext(redirectionContext);
   const origin = window.location.origin;
-  const redirectionRef = useRef();
+
   const handleDelete = () => {
     const toBeDeleted = window.confirm(
       `Are you sure you want to delete the redirection?`
     );
-    if (toBeDeleted) deleteRedirection(id, redirectionRef);
+    if (toBeDeleted) deleteRedirection(id);
   };
 
   const handleEdit = async (fromPath, toPath) => {
@@ -46,10 +46,7 @@ const Block = ({ id, from, to, deleteRedirection }) => {
   return (
     <>
       {!showEditForm && (
-        <div
-          className="flex flex-row bg-white p-3 rounded-sm my-2 justify-between"
-          ref={redirectionRef}
-        >
+        <div className="flex flex-row bg-white p-3 rounded-sm my-2 justify-between">
           <div className="w-38 break-words">
             <span className="neeto-ui-text-gray-400">{origin}</span>
             <span className="neeto-ui-text-gray-700">{from}</span>

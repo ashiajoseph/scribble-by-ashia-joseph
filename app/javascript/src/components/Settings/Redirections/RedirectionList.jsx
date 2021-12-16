@@ -17,9 +17,8 @@ const RedirectionList = () => {
 
   const count = useRef(0);
 
-  const deleteRedirection = async (idToBeDeleted, redirectionRef) => {
+  const deleteRedirection = async idToBeDeleted => {
     try {
-      redirectionRef.current.className = "hidden";
       await redirectionsApi.destroy(idToBeDeleted);
       const filteredList = redirectionList.filter(
         ({ id }) => id !== idToBeDeleted

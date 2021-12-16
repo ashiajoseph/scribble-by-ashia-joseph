@@ -37,7 +37,7 @@ const PrivateRoute = () => {
   useEffect(() => {
     fetchWebsiteInfo();
   }, []);
-  logger.info("-");
+
   if (loading) {
     return (
       <div className="py-10 mt-40">

@@ -121,56 +121,9 @@ const Dashboard = () => {
   const columns = useMemo(() => columnHeader, []);
   const tableInstance = useTable({ columns: columns, data: data }, useFilters);
 
-  const modifyCount = () => {
-    const articleStatus = articleToBeDeleted.status;
-    const otherStatus = articleStatus === "draft" ? "published" : "draft";
-    const totalArticlesCountOfStatus =
-      displayedCount[`total_${articleStatus}_count`] - 1;
-    const totalArticlesCountOfOtherStatus =
-      displayedCount[`total_${otherStatus}_count`];
-
-    const newCount =
-      totalArticlesCountOfStatus + totalArticlesCountOfOtherStatus;
-    setFilteredArticlesCount(newCount);
-    setDisplayedCount({
-      [`total_${articleStatus}_count`]: totalArticlesCountOfStatus,
-      [`${articleStatus}`]: totalArticlesCountOfStatus,
-      [`total_${otherStatus}_count`]: totalArticlesCountOfOtherStatus,
-      [`${otherStatus}`]: totalArticlesCountOfOtherStatus,
-    });
-  };
-
-  const modifyList = () => {
-    const filteredArticleList = articleList.filter(
-      ({ id }) => id !== articleToBeDeleted.id
-    );
-
-    const modifiedCategoryList = categoryList.map(category => {
-      const newCategoryObject = { ...category };
-      if (category.id === articleToBeDeleted.category_id) {
-        newCategoryObject[articleToBeDeleted.status] =
-          articleToBeDeleted.status === "draft"
-            ? category["draft"] - 1
-            : category["published"] - 1;
-      }
-
-      return newCategoryObject;
-    });
-    setArticleList(filteredArticleList);
-    setCategoryList(modifiedCategoryList);
-  };
-
-  useEffect(() => {
-    if (articleToBeDeleted.id !== null) {
-      modifyList();
-      modifyCount();
-      setArticleToBeDeleted({ id: null });
-    }
-  }, [articleToBeDeleted]);
-
   useEffect(() => {
     fetchCategoryList();
-  }, []);
+  }, [articleToBeDeleted]);
 
   if (loading) {
     return (

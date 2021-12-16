@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   defaults format: :json do
-    resources :categories, only: %i[index create update destroy]
+    resources :categories, except: %i[new edit show]
     resources :categories do
       member do
         put "reorder_position"
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :articles, except: %i[index new edit]
     resource :website, only: %i[show update]
     resource :session, only: :create
+    resources :redirections, except: %i[new edit]
   end
 
   root "home#index"

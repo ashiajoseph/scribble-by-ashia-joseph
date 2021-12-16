@@ -74,6 +74,7 @@ const PrivateRoute = () => {
       <Switch>
         <Route exact path="/public/articles" component={ArticleList} />
         <Route exact path="/public/articles/:slug" component={ArticleList} />
+        <Redirect to="/404" />
       </Switch>
     </websiteContext.Provider>
   );
